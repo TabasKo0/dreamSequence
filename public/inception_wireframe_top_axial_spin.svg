@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <rect width="500" height="500" fill="#080b0d"/>
+
+  <defs>
+    <!-- A single spinning frame: the top is rotationally symmetric,
+         so its vertical axis stays fixed while the visible meridians move. -->
+    <g id="rings" fill="none" stroke="#b9c8d0" stroke-width="1.25" opacity=".9">
+      <ellipse cx="250" cy="315" rx="132" ry="25"/>
+      <ellipse cx="250" cy="304" rx="119" ry="21"/>
+      <ellipse cx="250" cy="292" rx="103" ry="17"/>
+      <ellipse cx="250" cy="278" rx="82" ry="13"/>
+      <ellipse cx="250" cy="263" rx="61" ry="10"/>
+      <ellipse cx="250" cy="246" rx="45" ry="7"/>
+      <ellipse cx="250" cy="226" rx="32" ry="5"/>
+      <ellipse cx="250" cy="205" rx="23" ry="4"/>
+      <ellipse cx="250" cy="180" rx="16" ry="3"/>
+      <ellipse cx="250" cy="150" rx="10" ry="2"/>
+    </g>
+
+    <g id="meridians" fill="none" stroke="#d7e1e5" stroke-width="1.15" opacity=".8">
+      <path d="M250 150 C220 190 190 240 118 315 C190 335 220 350 250 380"/>
+      <path d="M250 150 C235 190 225 245 160 315 C210 335 232 355 250 380"/>
+      <path d="M250 150 C245 195 244 250 202 315 C230 340 244 360 250 380"/>
+      <path d="M250 150 C250 200 250 260 250 315 C250 340 250 360 250 380"/>
+      <path d="M250 150 C255 195 256 250 298 315 C270 340 256 360 250 380"/>
+      <path d="M250 150 C265 190 275 245 340 315 C290 335 268 355 250 380"/>
+      <path d="M250 150 C280 190 310 240 382 315 C310 335 280 350 250 380"/>
+    </g>
+  </defs>
+
+  <!-- Ground contact -->
+  <ellipse cx="250" cy="382" rx="7" ry="3" fill="#aab8be" opacity=".35"/>
+
+  <!-- TOP: the rotation axis is vertical (Y axis).
+       We animate the visible meridian phase rather than rotating the whole
+       drawing in the 2D plane. This makes it spin around its own vertical axis. -->
+  <g>
+    <animate attributeName="opacity" values="1;1" dur="1s" repeatCount="indefinite"/>
+
+    <!-- Fixed silhouette/body rings -->
+    <use href="#rings"/>
+
+    <!-- Meridian set A moves from front to back -->
+    <g>
+      <animateTransform attributeName="transform"
+        type="rotate" from="0 250 265" to="360 250 265"
+        dur="0.7s" repeatCount="indefinite"/>
+      <!-- Counteract the 2D rotation with a clipped/flattened visual:
+           these are only the moving longitudinal highlights. -->
+      <path d="M250 150 C225 195 215 250 150 315 C205 335 232 355 250 380"
+            fill="none" stroke="#eef5f7" stroke-width="1.4"/>
+    </g>
+
+    <!-- Actual axial-spin illusion: meridians cycle horizontally.
+         Each set is a different azimuth around the vertical axis. -->
+    <g fill="none" stroke="#d7e1e5" stroke-width="1.15">
+      <path d="M250 150 C210 195 165 250 120 315 C175 335 215 355 250 380">
+        <animate attributeName="d" dur=".7s" repeatCount="indefinite"
+          values="
+          M250 150 C210 195 165 250 120 315 C175 335 215 355 250 380;
+          M250 150 C235 195 215 250 175 315 C210 335 232 355 250 380;
+          M250 150 C245 195 240 250 210 315 C230 340 244 360 250 380;
+          M250 150 C250 200 250 260 250 315 C250 340 250 360 250 380;
+          M250 150 C255 195 260 250 290 315 C270 340 256 360 250 380;
+          M250 150 C265 195 285 250 325 315 C290 335 268 355 250 380;
+          M250 150 C290 195 335 250 380 315 C325 335 285 355 250 380;
+          M250 150 C265 195 285 250 325 315 C290 335 268 355 250 380;
+          M250 150 C250 200 250 260 250 315 C250 340 250 360 250 380;
+          M250 150 C235 195 215 250 175 315 C210 335 232 355 250 380;
+          M250 150 C210 195 165 250 120 315 C175 335 215 355 250 380"/>
+      <animate attributeName="opacity" values=".15;.9;.15" dur=".7s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Center axis remains stationary -->
+    <path d="M250 138 L250 386" stroke="#e6eef1" stroke-width="1.6" opacity=".8"/>
+
+    <!-- Spindle and point silhouette -->
+    <path d="M250 138
+             C242 138 239 143 238 153
+             L232 205
+             C230 225 220 245 198 263
+             C174 282 145 296 118 307
+             C105 312 108 320 123 325
+             C155 336 196 341 250 341
+             C304 341 345 336 377 325
+             C392 320 395 312 382 307
+             C355 296 326 282 302 263
+             C280 245 270 225 268 205
+             L262 153
+             C261 143 258 138 250 138Z"
+          fill="none" stroke="#e1eaed" stroke-width="1.7"/>
+
+    <path d="M118 315 C155 331 200 341 250 341 C300 341 345 331 382 315
+             C351 334 317 348 286 357 L250 390 L214 357 C183 348 149 334 118 315Z"
+          fill="none" stroke="#c7d3d8" stroke-width="1.4"/>
+
+    <!-- slight optical blur/highlight -->
+    <ellipse cx="250" cy="316" rx="132" ry="25" fill="none"
+             stroke="#fff" stroke-width="2" opacity=".16">
+      <animate attributeName="stroke-dashoffset" from="0" to="-120"
+               dur=".35s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dasharray" values="8 45;30 23;8 45"
+               dur=".7s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+</svg>
