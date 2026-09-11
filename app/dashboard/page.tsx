@@ -1,6 +1,24 @@
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let team = null;
+  let members: any[] = [];
+
+  if (user) {
+    const { data: profile } = await supabase.from("users").select("team_id").eq("id", user.id).single();
+    if (profile?.team_id) {
+      const { data: teamData } = await supabase.from("teams").select("*").eq("id", profile.team_id).single();
+      team = teamData;
+      
+      const { data: membersData } = await supabase.from("users").select("id, username, role").eq("team_id", profile.team_id);
+      members = membersData || [];
+    }
+  }
+
   return (
       <main className="flex-1 flex flex-col h-full overflow-y-auto p-6 md:p-10 relative">
         {/* Top Header */}
@@ -113,11 +131,13 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
                 <p className="text-xs text-white/50 mb-1">Team Name :</p>
-                <p className="font-semibold text-lg">No team yet</p>
+                <p className="font-semibold text-lg">{team ? team.name : "No team yet"}</p>
               </div>
               <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
                 <p className="text-xs text-white/50 mb-1">Created</p>
-                <p className="font-semibold text-lg text-white/50">--</p>
+                <p className="font-semibold text-lg text-white/50">
+                  {team ? new Date(team.created_at).toLocaleDateString() : "--"}
+                </p>
               </div>
             </div>
           </div>
@@ -129,7 +149,19 @@ export default function Dashboard() {
         <div className="flex-1 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden min-h-[200px]">
            <div className="absolute right-8 top-8 text-white/20">
            </div>
-           <h3 className="text-xl font-semibold tracking-wide">Team Members</h3>
+           <h3 className="text-xl font-semibold tracking-wide mb-6">Team Members</h3>
+           {members.length > 0 ? (
+             <div className="space-y-4">
+               {members.map(member => (
+                 <div key={member.id} className="bg-black/20 p-4 rounded-xl border border-white/5 flex items-center justify-between">
+                   <p className="font-semibold text-white">{member.username}</p>
+                   <p className="text-xs text-white/50">{member.id === team?.owner_id ? "Captain" : "Member"}</p>
+                 </div>
+               ))}
+             </div>
+           ) : (
+             <p className="text-white/50">You are not in a team yet.</p>
+           )}
         </div>
 
         {/* Bottom padding for fixed dock */}

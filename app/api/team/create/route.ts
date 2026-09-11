@@ -24,7 +24,8 @@ export async function POST(request: Request) {
       .single()
 
     if (profileError) {
-      return NextResponse.json({ error: 'Failed to fetch user profile.' }, { status: 500 })
+      console.error('Database Error (fetch profile):', profileError)
+      return NextResponse.json({ error: `Backend Error (Profile): ${profileError.message}` }, { status: 500 })
     }
 
     if (callerProfile.team_id) {
@@ -46,11 +47,12 @@ export async function POST(request: Request) {
       .single()
 
     if (insertError) {
+      console.error('Database Error (insert team):', insertError)
       // 23505 is the PostgreSQL error code for unique_violation
       if (insertError.code === '23505') {
         return NextResponse.json({ error: 'Team name is already taken.' }, { status: 400 })
       }
-      return NextResponse.json({ error: 'Failed to create team.' }, { status: 500 })
+      return NextResponse.json({ error: `Backend Error (Insert): ${insertError.message}` }, { status: 500 })
     }
 
     // Update caller's team_id
@@ -60,8 +62,9 @@ export async function POST(request: Request) {
       .eq('id', user.id)
 
     if (updateError) {
+      console.error('Database Error (update user team_id):', updateError)
       // Rollback logic could go here, but for simplicity we return 500
-      return NextResponse.json({ error: 'Team created, but failed to join. Please contact support.' }, { status: 500 })
+      return NextResponse.json({ error: `Backend Error (Update): ${updateError.message}` }, { status: 500 })
     }
 
     return NextResponse.json({
