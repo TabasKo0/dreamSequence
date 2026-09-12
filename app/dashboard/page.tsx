@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import EventStatus from "@/components/EventStatus";
+import lore from "../../.lore.json";
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -114,39 +115,41 @@ export default async function Dashboard() {
           </div>
         </div>
 
-        {/* Pathway to Flag 0 */}
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
-          <div className="lg:col-span-2 rounded-[2rem] bg-gradient-to-r from-red-950/20 via-white/5 to-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 flex items-center gap-2">
-              <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
-                Prologue
-              </span>
+        {/* Pathways to Flags */}
+        <div className="grid grid-cols-1 gap-6 mb-6">
+          {lore.challenges.map((challenge, index) => (
+            <div key={challenge.id} className="rounded-[2rem] bg-gradient-to-r from-red-950/20 via-white/5 to-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 flex items-center gap-2">
+                <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
+                  Level {index + 1}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-semibold uppercase tracking-wider text-red-400">{challenge.flag_to_recover}</span>
+                <span className="text-white/30">•</span>
+                <span className="text-xs text-white/50 tracking-wider">{challenge.title}</span>
+              </div>
+
+              <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
+                PATHWAY TO {challenge.flag_to_recover.toUpperCase()}
+              </h3>
+
+              <p className="text-white/70 text-sm max-w-2xl mb-6 leading-relaxed">
+                {challenge.description}
+              </p>
+
+              <div>
+                <Link 
+                  href={`/level/${index}`} 
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group"
+                >
+                  <span>Enter The {challenge.title}</span>
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </Link>
+              </div>
             </div>
-
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-red-400">Flag 0</span>
-              <span className="text-white/30">•</span>
-              <span className="text-xs text-white/50 tracking-wider">The Threshold</span>
-            </div>
-
-            <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
-              PATHWAY TO FLAG 0
-            </h3>
-
-            <p className="text-white/70 text-sm max-w-2xl mb-6 leading-relaxed">
-              Step across the threshold into the subconscious. Solve the inaugural challenge to capture Flag 0 and begin your descent into the dream sequence.
-            </p>
-
-            <div>
-              <Link 
-                href="/intro" 
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group"
-              >
-                <span>Enter The Threshold</span>
-                <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-              </Link>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Team Details & Members */}
@@ -194,7 +197,7 @@ export default async function Dashboard() {
         </div>
 
         {/* Bottom padding for fixed dock */}
-        <div className="h-28 shrink-0"></div>
+        <div className="h-10 shrink-0"></div>
       </main>
   );
 }

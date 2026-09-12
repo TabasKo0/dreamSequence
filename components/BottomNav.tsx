@@ -20,7 +20,7 @@ export default function BottomNav() {
   };
 
   return (
-    <nav aria-label="Bottom Navigation" className="fixed justify-start bottom-6 left-1/3 -translate-x-1/2 flex items-center z-50">
+    <nav aria-label="Bottom Navigation" className="fixed justify-start bottom-6 left-1/2 -translate-x-1/2 flex items-center z-50">
       <div className="flex items-center gap-1 rounded-full bg-white/5 border border-white/40 backdrop-blur-xs p-1.5 shadow-2xl">
         <div className="flex items-center gap-1 px-2">
           {navItems.map((item) => {

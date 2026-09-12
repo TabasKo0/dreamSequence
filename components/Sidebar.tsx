@@ -98,9 +98,7 @@ export default function Sidebar() {
           <span className="text-sm font-semibold truncate" title={username}>{username}</span>
           <span className="text-xs text-white/60 truncate" title={email}>{email}</span>
           <div className="flex items-center gap-1 mt-1">
-            <span className="w-full max-w-[40px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-[10px] text-cyan-400 font-medium tracking-wide flex items-center justify-center border border-cyan-400/30">
-              Active
-            </span>
+          
           </div>
         </div>
       </div>

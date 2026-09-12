@@ -3,17 +3,21 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "../app/intro/intro.module.css";
+import lore from "../.lore.json";
+
 
 interface IntroSequenceProps {
   text?: string;
   redirectUrl?: string;
   onComplete?: () => void;
+  asOverlay?: boolean;
 }
 
 export default function IntroSequence({
-  text = "There's a version of this page waiting on the other side of this sentence. Finish reading, then open the door.",
+  text = lore.ctf_event.overview,
   redirectUrl = "/dashboard",
-  onComplete
+  onComplete,
+  asOverlay = false
 }: IntroSequenceProps) {
   const router = useRouter();
   const [textIndex, setTextIndex] = useState(0);
@@ -128,7 +132,10 @@ export default function IntroSequence({
   if (revealStage === 5) return null;
 
   return (
-    <div className={styles.bg}>
+    <div 
+      className={styles.bg}
+      style={asOverlay ? { position: 'fixed', inset: 0, zIndex: 9999, background: 'transparent' } : undefined}
+    >
       <div className={styles.intro} aria-hidden="false">
         <div className={topPanelClasses}></div>
         <div className={bottomPanelClasses}></div>
