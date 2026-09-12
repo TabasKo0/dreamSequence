@@ -1,9 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import EventStatus from "./components/EventStatus";
 
 export default async function Dashboard() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
+  // Fetch global CTF settings for dynamic event status
+  const { data: ctfSettings } = await supabase
+    .from("ctf_settings")
+    .select("*")
+    .eq("id", 1)
+    .single();
 
   let team = null;
   let members: any[] = [];
@@ -101,19 +110,7 @@ export default async function Dashboard() {
 </svg>
 
             </div>
-            <div>
-              <h2 className="text-3xl font-light tracking-wide mb-2 flex items-center gap-2">
-                STATUS: STARTED
-              </h2>
-            </div>
-          </div>
-          
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/50">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
-            </span>
-            <span className="text-xs font-semibold text-white tracking-wider">Live</span>
+            <EventStatus initialSettings={ctfSettings} />
           </div>
         </div>
 
@@ -122,9 +119,9 @@ export default async function Dashboard() {
           {/* Team Details */}
           <div className="lg:col-span-2 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8">
-              <button className="text-sm font-medium text-white/70 hover:text-white flex items-center gap-1 transition-colors">
+              <Link href="/dashboard/team" className="text-sm font-medium text-white/70 hover:text-white flex items-center gap-1 transition-colors">
                 Manage &rarr;
-              </button>
+              </Link>
             </div>
             <h3 className="text-xl font-semibold mb-8 tracking-wide">Team Details</h3>
             

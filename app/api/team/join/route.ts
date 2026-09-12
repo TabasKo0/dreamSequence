@@ -43,18 +43,31 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid join token or team not found.' }, { status: 404 })
     }
 
-    // 3. Team Size Hard Cap Check
+    // 3. Team Size Hard Cap Check (dynamically queries max_team_size from ctf_settings)
+    const { data: ctfSettings } = await supabase
+      .from('ctf_settings')
+      .select('max_team_size')
+      .eq('id', 1)
+      .single()
+
+    const maxCap = ctfSettings?.max_team_size ?? MAX_TEAM_SIZE
+
     const { count, error: countError } = await supabase
       .from('users')
       .select('id', { count: 'exact', head: true })
       .eq('team_id', team.id)
 
     if (countError) {
-      return NextResponse.json({ error: 'Failed to verify team capacity.' }, { status: 500 })
+      console.error('Database Error (count team members):', countError)
+      return NextResponse.json({
+        error: countError.message || 'Failed to verify team capacity.',
+        details: countError.details,
+        code: countError.code
+      }, { status: 500 })
     }
 
-    if (count !== null && count >= MAX_TEAM_SIZE) {
-      return NextResponse.json({ error: 'Team is currently full.' }, { status: 403 })
+    if (count !== null && count >= maxCap) {
+      return NextResponse.json({ error: 'This team has reached the maximum allowed size.' }, { status: 403 })
     }
 
     // 4. Join the team
@@ -64,7 +77,12 @@ export async function POST(request: Request) {
       .eq('id', user.id)
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to join the team. Please try again.' }, { status: 500 })
+      console.error('Database Error (join team update):', updateError)
+      return NextResponse.json({
+        error: updateError.message || 'Failed to join the team. Please try again.',
+        details: updateError.details,
+        code: updateError.code
+      }, { status: 400 })
     }
 
     return NextResponse.json({

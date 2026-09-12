@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       if (insertError.code === '23505') {
         return NextResponse.json({ error: 'Team name is already taken.' }, { status: 400 })
       }
-      return NextResponse.json({ error: `Backend Error (Insert): ${insertError.message}` }, { status: 500 })
+      return NextResponse.json({ error: insertError.message || 'Failed to create team.' }, { status: 400 })
     }
 
     // Update caller's team_id
@@ -63,8 +63,7 @@ export async function POST(request: Request) {
 
     if (updateError) {
       console.error('Database Error (update user team_id):', updateError)
-      // Rollback logic could go here, but for simplicity we return 500
-      return NextResponse.json({ error: `Backend Error (Update): ${updateError.message}` }, { status: 500 })
+      return NextResponse.json({ error: updateError.message || 'Failed to assign team to creator.' }, { status: 400 })
     }
 
     return NextResponse.json({

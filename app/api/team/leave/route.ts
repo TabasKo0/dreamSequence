@@ -38,6 +38,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'As the team owner, you cannot leave. You must disband the team.' }, { status: 400 })
     }
 
+    // Check if team leaving is enabled in ctf_settings
+    const { data: ctfSettings } = await supabase
+      .from('ctf_settings')
+      .select('team_leave_enabled')
+      .eq('id', 1)
+      .single()
+
+    if (ctfSettings && ctfSettings.team_leave_enabled === false) {
+      return NextResponse.json({ error: 'Leaving or modifying team rosters is currently disabled.' }, { status: 403 })
+    }
+
     // 3. Leave the team
     const { error: updateError } = await supabase
       .from('users')
@@ -45,7 +56,8 @@ export async function POST(request: Request) {
       .eq('id', user.id)
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to leave the team. Please try again.' }, { status: 500 })
+      console.error('Database Error (leave team):', updateError)
+      return NextResponse.json({ error: updateError.message || 'Failed to leave the team. Please try again.' }, { status: 400 })
     }
 
     return NextResponse.json({

@@ -7,6 +7,7 @@ export async function POST(request: Request) {
 
     const { data: { user }, error: userError } = await supabase.auth.getUser()
     if (userError || !user) {
+      console.error('[Team Disband] Auth user error:', userError)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -17,7 +18,16 @@ export async function POST(request: Request) {
       .eq('id', user.id)
       .single()
 
-    if (profileError || !callerProfile?.team_id) {
+    if (profileError) {
+      console.error('[Team Disband] Failed to fetch caller profile:', profileError)
+      return NextResponse.json({
+        error: `Failed to fetch profile: ${profileError.message}`,
+        details: profileError.details,
+        code: profileError.code
+      }, { status: 500 })
+    }
+
+    if (!callerProfile?.team_id) {
       return NextResponse.json({ error: 'You are not currently in a team.' }, { status: 400 })
     }
 
@@ -30,7 +40,16 @@ export async function POST(request: Request) {
       .eq('id', teamId)
       .single()
 
-    if (teamError || !team) {
+    if (teamError) {
+      console.error('[Team Disband] Failed to fetch team:', teamError)
+      return NextResponse.json({
+        error: `Team not found or error fetching team: ${teamError.message}`,
+        details: teamError.details,
+        code: teamError.code
+      }, { status: 404 })
+    }
+
+    if (!team) {
       return NextResponse.json({ error: 'Team not found.' }, { status: 404 })
     }
 
@@ -43,6 +62,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Cannot disband a team that has already scored points.' }, { status: 400 })
     }
 
+    // Check if team disbanding is enabled in ctf_settings
+    const { data: ctfSettings } = await supabase
+      .from('ctf_settings')
+      .select('team_disband_enabled')
+      .eq('id', 1)
+      .single()
+
+    if (ctfSettings && ctfSettings.team_disband_enabled === false) {
+      return NextResponse.json({ error: 'Team disbanding is currently disabled by the organizers.' }, { status: 403 })
+    }
+
     // 4. Disband the team: set team_id = null for all members
     const { error: membersUpdateError } = await supabase
       .from('users')
@@ -50,7 +80,19 @@ export async function POST(request: Request) {
       .eq('team_id', teamId)
 
     if (membersUpdateError) {
-      return NextResponse.json({ error: 'Failed to clear team members.' }, { status: 500 })
+      console.error('[Team Disband] Failed to clear team members:', {
+        message: membersUpdateError.message,
+        details: membersUpdateError.details,
+        hint: membersUpdateError.hint,
+        code: membersUpdateError.code,
+      })
+      console.error('[Team Disband] Full error:', membersUpdateError)
+      return NextResponse.json({
+        error: `Failed to clear team members: ${membersUpdateError.message}`,
+        details: membersUpdateError.details,
+        hint: membersUpdateError.hint,
+        code: membersUpdateError.code
+      }, { status: 500 })
     }
 
     // 5. Delete the team
@@ -60,7 +102,19 @@ export async function POST(request: Request) {
       .eq('id', teamId)
 
     if (deleteError) {
-      return NextResponse.json({ error: 'Failed to delete the team.' }, { status: 500 })
+      console.error('[Team Disband] Failed to delete team:', {
+        message: deleteError.message,
+        details: deleteError.details,
+        hint: deleteError.hint,
+        code: deleteError.code,
+      })
+      console.error('[Team Disband] Full error:', deleteError)
+      return NextResponse.json({
+        error: `Failed to delete the team: ${deleteError.message}`,
+        details: deleteError.details,
+        hint: deleteError.hint,
+        code: deleteError.code
+      }, { status: 500 })
     }
 
     return NextResponse.json({
@@ -68,8 +122,10 @@ export async function POST(request: Request) {
       message: 'Team disbanded successfully.'
     })
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in /api/team/disband:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    return NextResponse.json({
+      error: `Internal Server Error: ${error?.message || error || 'Unknown error'}`
+    }, { status: 500 })
   }
 }

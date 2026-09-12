@@ -58,6 +58,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Target user is not on your team.' }, { status: 400 })
     }
 
+    // Check if team leaving / roster modification is enabled in ctf_settings
+    const { data: ctfSettings } = await supabase
+      .from('ctf_settings')
+      .select('team_leave_enabled')
+      .eq('id', 1)
+      .single()
+
+    if (ctfSettings && ctfSettings.team_leave_enabled === false) {
+      return NextResponse.json({ error: 'Leaving or modifying team rosters is currently disabled.' }, { status: 403 })
+    }
+
     // 4. Kick the target
     const { error: updateError } = await supabase
       .from('users')
@@ -65,7 +76,8 @@ export async function POST(request: Request) {
       .eq('id', targetUserId)
 
     if (updateError) {
-      return NextResponse.json({ error: 'Failed to kick the member. Please try again.' }, { status: 500 })
+      console.error('Database Error (kick member):', updateError)
+      return NextResponse.json({ error: updateError.message || 'Failed to kick the member. Please try again.' }, { status: 400 })
     }
 
     return NextResponse.json({
