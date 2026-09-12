@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import LogoutButton from "./components/LogoutButton";
+import LogoutButton from "@/components/LogoutButton";
 import { redirect } from "next/navigation";
 
 export default async function AccountPage() {
@@ -31,7 +31,7 @@ export default async function AccountPage() {
         <h1 className="text-5xl font-bold tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]">ACCOUNT</h1>
       </header>
       
-      <div className="flex-1 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden flex flex-col max-w-4xl w-full">
+      <div className="flex-1 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden flex flex-col w-full">
         <h2 className="text-2xl font-semibold mb-6">Profile Details</h2>
         
         <div className="space-y-6 flex-1">

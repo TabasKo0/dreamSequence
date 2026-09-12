@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import EventStatus from "./components/EventStatus";
+import EventStatus from "@/components/EventStatus";
 
 export default async function Dashboard() {
   const supabase = await createClient();

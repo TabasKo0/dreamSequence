@@ -1,4 +1,4 @@
-import TeamManager from "./components/TeamManager";
+import TeamManager from "@/components/TeamManager";
 
 export default function TeamPage() {
   return (
