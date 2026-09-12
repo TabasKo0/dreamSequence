@@ -88,7 +88,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col w-64 border-r border-white/50 bg-black/20 backdrop-blur-3xl p-4 gap-6 h-full">
+    <aside className="hidden md:flex flex-col w-64 border-r border-white/50 bg-black/20 backdrop-blur-3xl p-4 gap-6 h-full shrink-0 overflow-y-auto">
       {/* User Card */}
       <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/50 shadow-lg mt-2">
         <div className="w-10 h-10 shrink-0 rounded-full bg-slate-500 flex items-center justify-center text-lg font-medium text-white shadow-inner">

@@ -29,7 +29,7 @@ export default async function Dashboard() {
   }
 
   return (
-      <main className="flex-1 flex flex-col h-full overflow-y-auto p-6 md:p-10 relative">
+      <main className="flex-1 min-h-0 flex flex-col h-full overflow-y-auto p-6 md:p-10 relative">
         {/* Top Header */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
@@ -114,55 +114,87 @@ export default async function Dashboard() {
           </div>
         </div>
 
-        {/* Middle Grid */}
+        {/* Pathway to Flag 0 */}
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
-          {/* Team Details */}
-          <div className="lg:col-span-2 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8">
-              <Link href="/dashboard/team" className="text-sm font-medium text-white/70 hover:text-white flex items-center gap-1 transition-colors">
-                Manage &rarr;
+          <div className="lg:col-span-2 rounded-[2rem] bg-gradient-to-r from-red-950/20 via-white/5 to-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 flex items-center gap-2">
+              <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
+                Prologue
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs font-semibold uppercase tracking-wider text-red-400">Flag 0</span>
+              <span className="text-white/30">•</span>
+              <span className="text-xs text-white/50 tracking-wider">The Threshold</span>
+            </div>
+
+            <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
+              PATHWAY TO FLAG 0
+            </h3>
+
+            <p className="text-white/70 text-sm max-w-2xl mb-6 leading-relaxed">
+              Step across the threshold into the subconscious. Solve the inaugural challenge to capture Flag 0 and begin your descent into the dream sequence.
+            </p>
+
+            <div>
+              <Link 
+                href="/intro" 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group"
+              >
+                <span>Enter The Threshold</span>
+                <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
               </Link>
             </div>
-            <h3 className="text-xl font-semibold mb-8 tracking-wide">Team Details</h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
-                <p className="text-xs text-white/50 mb-1">Team Name :</p>
-                <p className="font-semibold text-lg">{team ? team.name : "No team yet"}</p>
-              </div>
-              <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
-                <p className="text-xs text-white/50 mb-1">Created</p>
-                <p className="font-semibold text-lg text-white/50">
-                  {team ? new Date(team.created_at).toLocaleDateString() : "--"}
-                </p>
-              </div>
+          </div>
+        </div>
+
+        {/* Team Details & Members */}
+        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden min-h-[200px] mb-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-xl font-semibold tracking-wide">Team Details</h3>
+            <Link 
+              href="/dashboard/team" 
+              className="text-sm font-medium text-white/70 hover:text-white flex items-center gap-1 transition-colors"
+            >
+              Manage &rarr;
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
+              <p className="text-xs text-white/50 mb-1">Team Name :</p>
+              <p className="font-semibold text-lg">{team ? team.name : "No team yet"}</p>
+            </div>
+            <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
+              <p className="text-xs text-white/50 mb-1">Created</p>
+              <p className="font-semibold text-lg text-white/50">
+                {team ? new Date(team.created_at).toLocaleDateString() : "--"}
+              </p>
             </div>
           </div>
 
-          
-        </div>
-
-        {/* Team Members */}
-        <div className="flex-1 rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden min-h-[200px]">
-           <div className="absolute right-8 top-8 text-white/20">
-           </div>
-           <h3 className="text-xl font-semibold tracking-wide mb-6">Team Members</h3>
-           {members.length > 0 ? (
-             <div className="space-y-4">
-               {members.map(member => (
-                 <div key={member.id} className="bg-black/20 p-4 rounded-xl border border-white/5 flex items-center justify-between">
-                   <p className="font-semibold text-white">{member.username}</p>
-                   <p className="text-xs text-white/50">{member.id === team?.owner_id ? "Captain" : "Member"}</p>
-                 </div>
-               ))}
-             </div>
-           ) : (
-             <p className="text-white/50">You are not in a team yet.</p>
-           )}
+          <div className="border-t border-white/10 pt-6">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-white/60 mb-4">Team Members</h4>
+            {members.length > 0 ? (
+              <div className="space-y-3">
+                {members.map(member => (
+                  <div key={member.id} className="bg-black/20 p-4 rounded-xl border border-white/5 flex items-center justify-between">
+                    <p className="font-semibold text-white">{member.username}</p>
+                    <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-medium">
+                      {member.id === team?.owner_id ? "Captain" : "Member"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-white/50 text-sm">You are not in a team yet.</p>
+            )}
+          </div>
         </div>
 
         {/* Bottom padding for fixed dock */}
-        <div className="h-28"></div>
+        <div className="h-28 shrink-0"></div>
       </main>
   );
 }
