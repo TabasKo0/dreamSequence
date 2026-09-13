@@ -183,7 +183,6 @@ export default function LoginPage() {
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-center">
                     <label className="text-xs font-semibold text-white/60 uppercase tracking-wider">Password</label>
-                    <a href="#" className="text-xs text-red-400 hover:text-red-300 transition-colors">Forgot?</a>
                   </div>
                   <input 
                     type="password" 

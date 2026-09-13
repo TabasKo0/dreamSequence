@@ -84,7 +84,6 @@ export default function Sidebar() {
     { name: "Dashboard", href: "/dashboard" },
     { name: "Team", href: "/dashboard/team" },
     { name: "Account", href: "/dashboard/account" },
-    { name: "Hall ID", href: "/dashboard/hall-id" },
   ];
 
   return (
