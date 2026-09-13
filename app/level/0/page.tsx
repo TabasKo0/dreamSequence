@@ -12,12 +12,12 @@ export default function LevelZeroPage() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-black text-white flex">
       {/* Intro Sequence Overlay */}
-      {/* {!introFinished && (
+      {!introFinished && (
         <IntroSequence 
           asOverlay={true} 
           onComplete={() => setIntroFinished(true)} 
         />
-      )} */}
+      )}
 
       {/* Left Side: Airplane Window View & Text */}
       <div className="relative flex-1 h-screen flex flex-col justify-end p-18">

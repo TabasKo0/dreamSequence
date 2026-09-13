@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./intro.module.css";
 
 const fullText = "There's a version of this page waiting on the other side of this sentence. Finish reading, then open the door.";
 
@@ -85,50 +84,50 @@ export default function IntroPage() {
 
   // Determine classes based on stages
   const topPanelClasses = [
-    styles.panelTop,
-    revealStage >= 4 ? styles.panelTopSeam : "",
-    revealStage >= 4 ? styles.panelTopSlide : ""
-  ].join(" ");
+    "intro-panel-top",
+    revealStage >= 4 ? "intro-panel-top-seam" : "",
+    revealStage >= 4 ? "intro-panel-top-slide" : ""
+  ].filter(Boolean).join(" ");
 
   const bottomPanelClasses = [
-    styles.panelBottom,
-    revealStage >= 4 ? styles.panelBottomSeam : "",
-    revealStage >= 4 ? styles.panelBottomSlide : ""
-  ].join(" ");
+    "intro-panel-bottom",
+    revealStage >= 4 ? "intro-panel-bottom-seam" : "",
+    revealStage >= 4 ? "intro-panel-bottom-slide" : ""
+  ].filter(Boolean).join(" ");
 
   const orbClasses = [
-    styles.orb,
-    revealStage >= 2 ? styles.orbShow : "",
-    revealStage >= 4 ? styles.orbBurst : ""
-  ].join(" ");
+    "intro-orb",
+    revealStage >= 2 ? "intro-orb-show" : "",
+    revealStage >= 4 ? "intro-orb-burst" : ""
+  ].filter(Boolean).join(" ");
 
   const lineClasses = [
-    styles.line,
-    revealStage >= 3 ? styles.lineExtend : "",
-    revealStage >= 4 ? styles.lineFade : ""
-  ].join(" ");
+    "intro-line",
+    revealStage >= 3 ? "intro-line-extend" : "",
+    revealStage >= 4 ? "intro-line-fade" : ""
+  ].filter(Boolean).join(" ");
 
   // Prevent rendering if finished (navigation takes over)
   if (revealStage === 5) return null;
 
   return (
-    <div className={styles.bg}>
-      <div className={styles.intro} aria-hidden="false">
+    <div className="intro-bg">
+      <div className="intro-container" aria-hidden="false">
         <div className={topPanelClasses}></div>
         <div className={bottomPanelClasses}></div>
 
-        <div className={`${styles.typewriterWrap} ${revealStage >= 1 ? styles.typewriterWrapFadeOut : ""}`}>
-          <p className={styles.typewriter}>
+        <div className={`intro-typewriter-wrap ${revealStage >= 1 ? "intro-typewriter-wrap-fade-out" : ""}`}>
+          <p className="intro-typewriter">
             <span>{fullText.substring(0, textIndex)}</span>
-            <span className={styles.cursor} aria-hidden="true">&nbsp;</span>
+            <span className="intro-cursor" aria-hidden="true">&nbsp;</span>
           </p>
         </div>
         
-        <div className={`${styles.hint} ${typingDone && revealStage === 0 ? styles.hintVisible : ""}`}>
+        <div className={`intro-hint ${typingDone && revealStage === 0 ? "intro-hint-visible" : ""}`}>
           click, or press any key
         </div>
 
-        <div className={styles.orbWrap}>
+        <div className="intro-orb-wrap">
           <div className={orbClasses}></div>
         </div>
         <div className={lineClasses}></div>

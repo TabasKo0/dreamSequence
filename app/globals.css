@@ -53,3 +53,176 @@ body {
   font-weight: 700;
   font-style: italic;
 }
+
+/* ==========================================================================
+   Intro Sequence Styles (Globalized)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Work+Sans:wght@400;500&display=swap');
+
+:root {
+  --intro-bg: #0c0b10;
+  --intro-ink: #ece7e0;
+  --intro-muted: #756f7c;
+  --intro-glow: #e8a15c;
+  --intro-glow-2: #c96b4a;
+}
+
+.intro-bg {
+  background: var(--intro-bg);
+  color: var(--intro-ink);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.intro-container {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.intro-panel-top,
+.intro-panel-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: var(--intro-bg);
+  z-index: 1;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  transition: transform 1150ms cubic-bezier(.76,0,.24,1), box-shadow 1150ms cubic-bezier(.76,0,.24,1);
+}
+
+.intro-panel-top { top: 0; height: 50%; }
+.intro-panel-bottom { bottom: 0; height: 50%; }
+
+.intro-panel-top-slide { transform: translateY(-100%); box-shadow: 0 40px 70px 0 rgba(0,0,0,0.65); }
+.intro-panel-bottom-slide { transform: translateY(100%); box-shadow: 0 -40px 70px 0 rgba(0,0,0,0.65); }
+
+.intro-panel-top::after,
+.intro-panel-bottom::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--intro-glow-2), var(--intro-glow), var(--intro-glow-2), transparent);
+  box-shadow: 0 0 22px 5px rgba(232,161,92,0.6);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.intro-panel-top::after { bottom: -1px; }
+.intro-panel-bottom::before { top: -1px; }
+
+.intro-panel-top-seam::after,
+.intro-panel-bottom-seam::before { opacity: 1; }
+
+.intro-typewriter-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8vw 6vw;
+  transition: opacity 650ms ease;
+}
+
+.intro-typewriter-wrap-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-typewriter {
+  max-width: 34ch;
+  text-align: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+.intro-cursor {
+  display: inline-block;
+  width: 1px;
+  margin-left: 2px;
+  color: var(--intro-glow);
+  animation: intro-blink 1s steps(1) infinite;
+}
+
+@keyframes intro-blink { 50% { opacity: 0; } }
+
+.intro-hint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 9vh;
+  z-index: 5;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--intro-muted);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+
+.intro-hint-visible {
+  opacity: 1;
+  animation: intro-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes intro-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.intro-orb-wrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.intro-orb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6ea, var(--intro-glow) 45%, var(--intro-glow-2) 100%);
+  box-shadow: 0 0 18px 4px rgba(232,161,92,0.55), 0 0 40px 12px rgba(201,107,74,0.25);
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 650ms cubic-bezier(.34,1.56,.64,1), opacity 650ms ease;
+}
+
+.intro-orb-show { opacity: 1; transform: scale(1); }
+
+.intro-orb-burst {
+  opacity: 0;
+  transform: scale(3.2);
+  transition: transform 550ms ease-out, opacity 550ms ease-out;
+}
+
+.intro-line {
+  position: fixed;
+  top: calc(50% - 1px);
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 9;
+  background: linear-gradient(90deg, transparent, var(--intro-glow-2), var(--intro-glow), var(--intro-glow-2), transparent);
+  box-shadow: 0 0 14px rgba(232,161,92,0.5);
+  transform: scaleX(0);
+  transition: transform 950ms cubic-bezier(.65,0,.35,1);
+}
+
+.intro-line-extend { transform: scaleX(1); }
+
+.intro-line-fade {
+  opacity: 0;
+  transition: opacity 450ms ease 150ms;
+}
+
