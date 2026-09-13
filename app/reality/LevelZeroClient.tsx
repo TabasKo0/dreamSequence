@@ -1,13 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import IntroSequence from "@/components/IntroSequence";
+import Link from "next/link";
 import { useState } from "react";
-import lore from "../../../.lore.json";
+import IntroSequence from "@/components/IntroSequence";
+import lore from "../../.lore.json"; // fallback if description isn't in DB
 
-export default function LevelZeroPage() {
+interface LevelZeroClientProps {
+  challenge: any;
+}
+
+export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
   const [introFinished, setIntroFinished] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  
+  // Use DB description if available, else fallback to local JSON
+  const description = challenge?.description || lore.challenges[0].description;
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-black text-white flex">
@@ -39,7 +47,7 @@ export default function LevelZeroPage() {
           <div className="rounded-lg bg-black/40 p-6 backdrop-blur-md border border-white/10 shadow-2xl">
             <h1 className="mb-4 text-2xl font-bold tracking-widest text-blue-200">PROLOGUE</h1>
             <p className="text-lg leading-relaxed text-gray-200">
-              {lore.challenges[0].description}
+              {description}
             </p>
           </div>
         </div>
@@ -103,8 +111,10 @@ export default function LevelZeroPage() {
             </button>
 
             {/* Direct Message (Paper Airplane) Button */}
-            <button
-              type="button"
+            <Link
+              href="https://www.instagram.com/acmw_vitc/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-1.5 transition-transform active:scale-110 hover:opacity-80 focus:outline-none flex items-center justify-center cursor-pointer"
               aria-label="Direct message"
             >
@@ -122,7 +132,7 @@ export default function LevelZeroPage() {
                   d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
                 />
               </svg>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

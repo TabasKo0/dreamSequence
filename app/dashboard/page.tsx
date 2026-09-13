@@ -36,8 +36,6 @@ export default async function Dashboard() {
           <div>
             <h1 className="text-5xl font-bold mb-2 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]" >DASHBOARD</h1>
           </div>
-          
-          
         </header>
 
         {/* Status Banner */}
@@ -120,18 +118,18 @@ export default async function Dashboard() {
           <div className="rounded-[2rem] bg-gradient-to-r from-red-950/20 via-white/5 to-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 flex items-center gap-2">
               <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
-                Level 0
+                {team ? team.game_level : "Reality"}
               </span>
             </div>
 
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-red-400">FLAG 0</span>
-              <span className="text-white/30">â€¢</span>
-              <span className="text-xs text-white/50 tracking-wider">The Beginning</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-red-400">FLAG {team ? team.current_flag : 1}</span>
+              <span className="text-white/30">•</span>
+              <span className="text-xs text-white/50 tracking-wider">Your Next Checkpoint</span>
             </div>
 
             <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
-              PATHWAY TO FLAG 0
+              PATHWAY TO FLAG {team ? team.current_flag : 1}
             </h3>
 
             <p className="text-white/70 text-sm max-w-2xl mb-6 leading-relaxed">
@@ -139,13 +137,23 @@ export default async function Dashboard() {
             </p>
 
             <div>
-              <Link 
-                href={`/level/0`} 
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group"
-              >
-                <span>Enter The Pathway</span>
-                <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-              </Link>
+              {team ? (
+                <Link 
+                  href={`/${(team.game_level || 'Reality').toLowerCase().replace(/ /g, '-')}`} 
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group tracking-widest"
+                >
+                  <span className="uppercase font-bold text-red-400 group-hover:text-red-300">
+                    {team.current_flag === 1 
+                      ? "START CTF" 
+                      : `CONTINUE CTF (${team.game_level})`}
+                  </span>
+                  <span className="group-hover:translate-x-1 transition-transform text-red-400">&rarr;</span>
+                </Link>
+              ) : (
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/20 text-white/50 font-medium text-sm">
+                  <span>Create a team to start</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
