@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import IntroSequence from "@/components/IntroSequence";
 import FlagSubmission from "@/components/FlagSubmission";
 import lore from "../../.lore.json";
 
@@ -11,14 +12,24 @@ interface LevelZeroClientProps {
 }
 
 export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
+  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 1);
   const [isLiked, setIsLiked] = useState(false);
   
   const loreChallenge = lore.challenges.find((c) => c.sequence === challenge?.flag_number) || lore.challenges.find((c) => c.stage === "reality");
-  const title = challenge?.title || loreChallenge?.title || "PROLOGUE";
-  const description = challenge?.description || loreChallenge?.description || "";
+  const title = loreChallenge?.title || challenge?.title || "PROLOGUE";
+  const description = loreChallenge?.description || challenge?.description || "";
+  
+  const currentIntroText = lore.stages.find(s => s.id === "reality")?.intro_text || "";
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-black text-white flex">
+      {!introFinished && (
+        <IntroSequence 
+          asOverlay={true} 
+          text={currentIntroText}
+          onComplete={() => setIntroFinished(true)} 
+        />
+      )}
 
       {/* Left Side: Airplane Window View & Text */}
       <div className="relative flex-1 h-screen flex flex-col justify-end p-18">
@@ -36,18 +47,21 @@ export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
         <div className="absolute inset-0 bg-gradient-to-l from-black/50 via-black/40 to-transparent"></div>
 
         {/* Story Text */}
-        <div className="relative z-10 ">
-          <div className="rounded-lg bg-black/40 p-6 backdrop-blur-md border border-white/10 shadow-2xl">
-            <h1 className="mb-4 text-2xl font-bold tracking-widest text-blue-200">{title}</h1>
-            <p className="text-lg leading-relaxed text-gray-200 whitespace-pre-line">
-              {description}
-            </p>
+        {introFinished && (
+          <div className="relative z-10 animate-in fade-in duration-1000">
+            <div className="rounded-lg bg-black/40 p-6 backdrop-blur-md border border-white/10 shadow-2xl">
+              <h1 className="mb-4 text-2xl font-bold tracking-widest text-blue-200">{title}</h1>
+              <p className="text-lg leading-relaxed text-gray-200 whitespace-pre-line">
+                {description}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Right Side: Ticket Image or Portal */}
-      <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center">
+      {introFinished && (
+        <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center animate-in fade-in duration-1000">
         {challenge?.flag_number === 1 || !challenge?.flag_number ? (
           <div className="relative h-full aspect-[9/16] max-w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
             <Image
@@ -125,22 +139,27 @@ export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
             </div>
           </div>
         ) : challenge?.flag_number === 2 ? (
-          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 max-w-sm w-full flex flex-col items-center justify-center gap-6 shadow-2xl">
-            <h2 className="text-xl font-semibold text-white tracking-wide">Second Checkpoint</h2>
-            <Link
-              href="https://flight-portal-example.com"
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors"
-            >
-              Access Flight Portal
-            </Link>
-            <div className="w-full mt-4">
-              <FlagSubmission targetFlagNumber={2} />
+          <div className="relative w-full max-w-sm rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-8 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-6">
+            <div className="absolute inset-0 bg-white/5"></div>
+            <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
+            <div className="relative z-10 w-full flex flex-col items-center gap-6">
+              <h2 className="text-xl font-semibold text-white tracking-wide text-center">Second Checkpoint</h2>
+              <Link
+                href="https://saito-airlines.onrender.com/"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors text-center"
+              >
+                Access Flight Portal
+              </Link>
+              <div className="w-full">
+                <FlagSubmission targetFlagNumber={2} />
+              </div>
             </div>
           </div>
         ) : null}
-      </div>
+        </div>
+      )}
     </main>
   );
 }
