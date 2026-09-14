@@ -70,7 +70,7 @@ export default function LoginPage() {
       setErrorMsg(error.message);
       setIsLoading(false);
     } else {
-      router.push("/dashboard");
+      router.push("/intro");
       router.refresh();
     }
   };
