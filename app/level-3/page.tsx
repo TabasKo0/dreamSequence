@@ -10,7 +10,7 @@ export default async function LevelThreePage() {
   const { data: challenge, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points")
-    .eq("game_level", 'Level 3')
+    //.eq("game_level", 'Level 3')
     .eq("flag_number", team.current_flag)
     .maybeSingle();
 

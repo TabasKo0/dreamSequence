@@ -10,7 +10,6 @@ export default async function RealityPage() {
   const { data: challenge, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points")
-    .eq("game_level", 'Reality')
     .eq("flag_number", team.current_flag)
     .maybeSingle();
 

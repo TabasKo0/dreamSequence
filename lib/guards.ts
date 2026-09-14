@@ -32,22 +32,12 @@ export async function enforceLevelAccess(requiredGameLevel: string) {
     redirect("/dashboard");
   }
 
-  // Circuit Breaker: if they are requesting their current level, allow immediate access
-  if (team.game_level && requiredGameLevel.toLowerCase() === team.game_level.toLowerCase()) {
-    return { user, team };
-  }
-
-  // 4. Anti-Skip Rule based on Narrative Flags
-  const { data: challenges } = await supabase
-    .from("challenges")
-    .select("game_level")
-    .lte("flag_number", team.current_flag);
-
-  const unlockedLevels = challenges ? challenges.map(c => (c.game_level || "").toLowerCase()) : [];
-
-  if (!unlockedLevels.includes(requiredGameLevel.toLowerCase())) {
-    const slug = (team.game_level || 'Reality').toLowerCase().replace(/ /g, '-');
-    redirect(`/${slug}`);
+  // 4. Strict Level Enforcement
+  if (
+    !team.game_level ||
+    team.game_level.toLowerCase() !== requiredGameLevel.toLowerCase()
+  ) {
+    redirect("/dashboard");
   }
 
   return { user, team };

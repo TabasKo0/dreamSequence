@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import FlagSubmission from "@/components/FlagSubmission";
 import IntroSequence from "@/components/IntroSequence";
@@ -14,6 +14,12 @@ export default function LevelOneClient({ challenge }: { challenge: any }) {
   // Default to the server's current flag, or 3 if undefined
   const defaultTab = challenge?.flag_number === 4 ? 4 : 3;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
+
+  useEffect(() => {
+    if (challenge?.flag_number === 4) {
+      setActiveTab(4);
+    }
+  }, [challenge?.flag_number]);
 
   // Fetch lore based on the ACTIVE tab (so the center box updates when clicking signboards)
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-1");
@@ -57,7 +63,7 @@ export default function LevelOneClient({ challenge }: { challenge: any }) {
             disabled={isFlag3Solved}
             className={`absolute top-[52%] left-[12%] md:top-[57%] md:left-[16%] -translate-y-1/2 -translate-x-1/2 w-40 h-32 md:w-100 md:h-80 flex flex-col items-center justify-center transition-all duration-300 z-20 bg-[url('/signboard.png')] bg-contain bg-center bg-no-repeat
               ${activeTab === 3 ? "scale-110 drop-shadow-[0_0_25px_rgba(220,38,38,0.2)]" : "hover:drop-shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:scale-105"} 
-              ${isFlag3Solved ? "opacity-50 cursor-not-allowed grayscale" : "cursor-pointer"}`}
+              ${isFlag3Solved ? "cursor-not-allowed grayscale" : "cursor-pointer"}`}
           >
             <div className="relative z-10 flex flex-col items-center pt-2">
               <span className={`text-sm md:text-base font-black tracking-widest drop-shadow-md ${activeTab === 3 ? "text-red-300" : "text-gray-300"}`}>

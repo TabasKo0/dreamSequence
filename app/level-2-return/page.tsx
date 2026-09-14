@@ -10,7 +10,7 @@ export default async function LevelTwoReturnPage() {
   const { data: challenge, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points")
-    .eq("game_level", 'Level 2 Return')
+    //.eq("game_level", 'Level 2 Return')
     .eq("flag_number", team.current_flag)
     .maybeSingle();
 
@@ -19,7 +19,7 @@ export default async function LevelTwoReturnPage() {
     const { data: altChallenge } = await supabase
       .from("challenges")
       .select("flag_number, game_level, title, category, description, points")
-      .eq("game_level", 'Level 2 (Ascending)')
+      //.eq("game_level", 'Level 2 (Ascending)')
       .eq("flag_number", team.current_flag)
       .maybeSingle();
       
