@@ -45,14 +45,14 @@ export default function LevelTwoClient({ challenge }: { challenge: any }) {
       />
       <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
 
-      {/* Intro Sequence Overlay }
+      {/* Intro Sequence Overlay */}
       {!introFinished && (
         <IntroSequence 
           asOverlay={true} 
           text={currentIntroText}
           onComplete={() => setIntroFinished(true)} 
         />
-      )*/}
+      )}
 
       {introFinished && (
         <div className="absolute inset-0 w-full h-full animate-in fade-in duration-1000">
@@ -112,9 +112,11 @@ export default function LevelTwoClient({ challenge }: { challenge: any }) {
           {/* RIGHT SIGNBOARD (Flag 6 - Over the Door) */}
           <button
             onClick={() => setActiveTab(6)}
-            className={`absolute top-[55%] right-[10%] md:right-[12.5%] translate-x-1/2 -translate-y-1/2 w-[20vw] h-[90vh] md:w-[22vw] md:h-[90vh] z-20 transition-all duration-300 flex flex-col items-center justify-center
+            className={`absolute top-[55%] right-[10%] md:right-[12.5%] translate-x-1/2 -translate-y-1/2 w-[20vw] h-[90vh] md:w-[22vw] md:h-[120vh] z-20 transition-all duration-300 flex flex-col items-center justify-center
               ${activeTab === 6 ? "bg-red-400/10 shadow-[0_0_25px_rgba(220,38,38,0.1)]" : "hover:bg-white/10"}
               cursor-pointer`}
+                      style={{ clipPath: 'polygon(0% 20%, 115% 0%, 100% 100%, 0% 100%)' }}
+
           >
             <div className="relative z-10 flex flex-col items-center pt-2 pointer-events-none">
               <span className={`text-sm md:text-base font-black tracking-widest drop-shadow-[0_0_10px_rgba(0,0,0,1)] ${activeTab === 6 ? "text-red-300" : "text-gray-200"}`}>

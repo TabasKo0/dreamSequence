@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import LevelTwoReturnClient from "./LevelTwoReturnClient";
 
 export default async function LevelTwoReturnPage() {
-  const { team } = await enforceLevelAccess("Level 2 (Ascending)");
+  const { team } = await enforceLevelAccess("level-2-return");
 
   const supabase = await createClient();
   const { data: challenge, error } = await supabase
