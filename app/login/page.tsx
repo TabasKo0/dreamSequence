@@ -106,7 +106,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full items-start justify-center pt-[15vh] bg-[#0d1520] bg-[url('/balls1.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white p-6 relative overflow-hidden">
+    <div className="flex min-h-screen w-full items-start justify-center pt-[15vh] bg-[#0d1520] bg-[url('/login.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white p-6 relative overflow-hidden">
       
       {/* EDIT FOG OPACITY HERE (change opacity-50 to adjust thickness) */}
       <div ref={vantaRef} className="absolute inset-0 z-0 pointer-events-none opacity-50"></div>

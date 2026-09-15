@@ -8,10 +8,10 @@ import lore from "../../.lore.json";
 
 export default function LevelOneReturnClient({ challenge }: { challenge: any }) {
   // Intro sequence logic
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 11);
+  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 12);
   
   // Tab logic
-  const activeTab = 11;
+  const activeTab = 12;
 
   // Fetch lore
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-1-return");
@@ -71,20 +71,20 @@ export default function LevelOneReturnClient({ challenge }: { challenge: any }) 
                   {description}
                 </p>
                 
-                {/* Resources Link Placeholder */}
-                <div className="flex justify-center mb-8 w-full">
-                  <a 
-                    href="#" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                      <path fillRule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clipRule="evenodd" />
-                    </svg>
-                    VIEW RESOURCES
-                  </a>
-                </div>
+                {challenge?.link && (
+                  <div className="flex justify-center mb-8 w-full">
+                    <a 
+                      href={challenge.link} 
+                      download
+                      className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                        <path fillRule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clipRule="evenodd" />
+                      </svg>
+                      Download Resources
+                    </a>
+                  </div>
+                )}
 
                 <div className="w-full">
                   <FlagSubmission targetFlagNumber={activeTab} />
@@ -93,7 +93,7 @@ export default function LevelOneReturnClient({ challenge }: { challenge: any }) 
             </div>
           </div>
 
-          {/* RIGHT SIGNBOARD (Flag 11 - The Door/Way Up) */}
+          {/* RIGHT SIGNBOARD (Flag 12 - The Door/Way Up) */}
           <button
             className={`absolute top-[52%] right-[12%] md:top-[57%] md:right-[16%] translate-x-1/2 -translate-y-1/2 w-40 h-32 md:w-100 md:h-80 flex flex-col items-center justify-center transition-all duration-300 z-20 bg-[url('/signboard.png')] bg-contain bg-center bg-no-repeat scale-110 drop-shadow-[0_0_25px_rgba(220,38,38,0.2)] cursor-default`}
           >
@@ -101,7 +101,7 @@ export default function LevelOneReturnClient({ challenge }: { challenge: any }) 
               <span className={`text-sm md:text-base font-black tracking-widest drop-shadow-md text-red-300`}>
                 THE WAY UP
               </span>
-              <span className={`text-xs mt-1 font-bold text-red-200/80`}>Flag 11</span>
+              <span className={`text-xs mt-1 font-bold text-red-200/80`}>Flag 12</span>
             </div>
           </button>
 

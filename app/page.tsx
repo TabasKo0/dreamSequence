@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#0d1520] bg-[url('/real_ballz.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white overflow-hidden p-6">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#0d1520] bg-[url('/dashboard.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white overflow-hidden p-6">
       
       {/* Decorative Orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">

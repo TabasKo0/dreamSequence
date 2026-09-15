@@ -9,7 +9,7 @@ export default async function LimboPage() {
   const supabase = await createClient();
   const { data: challenge, error } = await supabase
     .from("challenges")
-    .select("flag_number, game_level, title, category, description, points")
+    .select("flag_number, game_level, title, category, description, points, link")
     //.eq("game_level", 'Limbo')
     .eq("flag_number", team.current_flag)
     .maybeSingle();
