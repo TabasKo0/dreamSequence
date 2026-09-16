@@ -4,9 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import FlagSubmission from "@/components/FlagSubmission";
 import IntroSequence from "@/components/IntroSequence";
+import HintButton from "@/components/HintButton";
 import lore from "../../.lore.json";
 
-export default function LevelTwoReturnClient({ challenge }: { challenge: any }) {
+export default function LevelTwoReturnClient({ challenge, team }: { challenge: any, team?: any }) {
   // Intro sequence logic
   const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 11);
   
@@ -71,6 +72,12 @@ export default function LevelTwoReturnClient({ challenge }: { challenge: any }) 
                 <p className="text-base md:text-lg leading-relaxed text-white whitespace-pre-line text-center mb-6">
                   {description}
                 </p>
+
+                <HintButton 
+                  flagNumber={challenge?.flag_number} 
+                  unlockedHints={team?.unlocked_hints} 
+                  key={challenge?.flag_number}
+                />
                 
                 {challenge?.link && (
                   <div className="flex justify-center mb-8 w-full">

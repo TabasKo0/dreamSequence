@@ -19,5 +19,5 @@ export default async function LevelTwoPage() {
     notFound();
   }
 
-  return <LevelTwoClient challenge={challenge} />;
+  return <LevelTwoClient challenge={challenge} team={team} />;
 }

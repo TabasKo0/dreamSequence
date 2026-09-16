@@ -19,5 +19,5 @@ export default async function LimboPage() {
     notFound();
   }
 
-  return <LimboClient challenge={challenge} />;
+  return <LimboClient challenge={challenge} team={team} />;
 }

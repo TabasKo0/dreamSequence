@@ -16,6 +16,7 @@ type Team = {
   join_token: string;
   owner_id: string;
   score: number;
+  unlocked_hints: number[];
 };
 
 type CtfSettings = {

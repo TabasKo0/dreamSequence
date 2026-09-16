@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import FlagSubmission from "@/components/FlagSubmission";
+import HintButton from "@/components/HintButton";
 import IntroSequence from "@/components/IntroSequence";
 import lore from "../../.lore.json";
 
-export default function LevelThreeClient({ challenge }: { challenge: any }) {
+export default function LevelThreeClient({ challenge, team }: { challenge: any, team: any }) {
   // Intro sequence logic
   const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 7);
   
@@ -57,6 +58,12 @@ export default function LevelThreeClient({ challenge }: { challenge: any }) {
               <p className="text-sm md:text-base leading-relaxed text-white whitespace-pre-line text-center mb-6 drop-shadow-md">
                 {description}
               </p>
+
+              <HintButton 
+                flagNumber={flagNumber} 
+                unlockedHints={team?.unlocked_hints} 
+                key={flagNumber}
+              />
               
               {challenge?.link && (
                   <div className="flex justify-center mb-8 w-full">

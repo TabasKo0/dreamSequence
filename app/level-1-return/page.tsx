@@ -22,8 +22,8 @@ export default async function LevelOneReturnPage() {
       .maybeSingle();
       
     if (!altChallenge) notFound();
-    return <LevelOneReturnClient challenge={altChallenge} />;
+    return <LevelOneReturnClient challenge={altChallenge} team={team} />;
   }
 
-  return <LevelOneReturnClient challenge={challenge} />;
+  return <LevelOneReturnClient challenge={challenge} team={team} />;
 }

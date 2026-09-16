@@ -24,8 +24,8 @@ export default async function LevelTwoReturnPage() {
       .maybeSingle();
       
     if (!altChallenge) notFound();
-    return <LevelTwoReturnClient challenge={altChallenge} />;
+    return <LevelTwoReturnClient challenge={altChallenge} team={team} />;
   }
 
-  return <LevelTwoReturnClient challenge={challenge} />;
+  return <LevelTwoReturnClient challenge={challenge} team={team} />;
 }

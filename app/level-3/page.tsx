@@ -19,5 +19,5 @@ export default async function LevelThreePage() {
     notFound();
   }
 
-  return <LevelThreeClient challenge={challenge} />;
+  return <LevelThreeClient challenge={challenge} team={team} />;
 }

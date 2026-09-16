@@ -5,13 +5,15 @@ import Link from "next/link";
 import { useState } from "react";
 import IntroSequence from "@/components/IntroSequence";
 import FlagSubmission from "@/components/FlagSubmission";
+import HintButton from "@/components/HintButton";
 import lore from "../../.lore.json";
 
 interface LevelZeroClientProps {
   challenge: any;
+  team: any;
 }
 
-export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
+export default function LevelZeroClient({ challenge, team }: LevelZeroClientProps) {
   const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 1);
   const [isLiked, setIsLiked] = useState(false);
   
@@ -54,6 +56,12 @@ export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
               <p className="text-lg leading-relaxed text-gray-200 whitespace-pre-line mb-6">
                 {description}
               </p>
+
+              <HintButton 
+                flagNumber={challenge?.flag_number} 
+                unlockedHints={team?.unlocked_hints} 
+                key={challenge?.flag_number}
+              />
               
               {challenge?.link && (
                 <div className="flex justify-start w-full">

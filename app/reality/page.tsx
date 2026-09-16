@@ -18,5 +18,5 @@ export default async function RealityPage() {
     notFound();
   }
 
-  return <LevelZeroClient challenge={challenge} />;
+  return <LevelZeroClient challenge={challenge} team={team} />;
 }

@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import FlagSubmission from "@/components/FlagSubmission";
+import HintButton from "@/components/HintButton";
 import IntroSequence from "@/components/IntroSequence";
 import RippleDistortion from "./ripple";
 import lore from "../../.lore.json";
 
-export default function LimboClient({ challenge }: { challenge: any }) {
+export default function LimboClient({ challenge, team }: { challenge: any, team: any }) {
   const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 9);
   
   // Flag 9 is the Limbo flag
@@ -71,6 +72,12 @@ export default function LimboClient({ challenge }: { challenge: any }) {
                 <p className="text-base md:text-lg leading-relaxed text-gray-300 whitespace-pre-line text-center mb-6">
                   {description}
                 </p>
+
+                <HintButton 
+                  flagNumber={activeTab} 
+                  unlockedHints={team?.unlocked_hints} 
+                  key={activeTab}
+                />
 
                 {challenge?.link && (
                   <div className="flex justify-center mb-8 w-full">

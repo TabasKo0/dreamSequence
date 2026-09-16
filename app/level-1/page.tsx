@@ -19,5 +19,5 @@ export default async function LevelOnePage() {
     notFound();
   }
 
-  return <LevelOneClient challenge={challenge} />;
+  return <LevelOneClient challenge={challenge} team={team} />;
 }
