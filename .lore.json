@@ -1,0 +1,170 @@
+{
+  "ctf_event": {
+    "title": "Dream Sequence",
+    "overview": "Robert wasn't a professional. He'd never heard of Dreamers or Architects - he just knew how to slip into someone else's dream. On a flight from Sydney to Los Angeles, he was paid to steal an idea from a sleeping stranger's mind. He expected one dream. He found layers instead - Level 1, Level 2, Level 3, and finally Limbo, where the mind stops making sense and time stops meaning anything. He left a trail on the way down. He never came back up. The plane landed in LA. The target woke and walked away. Robert didn't. Years later, his trail was found. You've been given the task he failed: follow him down through the layers, recover what he was sent to steal, and reach Limbo. There, you'll face the choice Robert never got to make - escape straight back to Reality, or climb back up through everything you passed on the way down. The deeper you go, the closer the secret gets, and the further Reality slips away."
+  },
+  "stages": [
+    {
+      "id": "reality",
+      "name": "Reality",
+      "sequence": 1,
+      "intro_text": "Before any dream, there's Reality. A flight. A boarding pass. A stranger about to fall asleep in seat 14A. This is where Robert's trail starts - and where yours does too. Two pieces of evidence are sitting in plain sight. Find them both before the target closes his eyes.",
+      "flags": ["flag-1", "flag-2"]
+    },
+    {
+      "id": "level-1",
+      "name": "Level 1",
+      "sequence": 2,
+      "intro_text": "The target is asleep. Robert closes his eyes too. When he opens them again, everything looks normal - too normal. This is Level 1: a dream built to look exactly like reality. Somewhere in here is an artifact left behind, and a door that leads further down. Everything else is a distraction.",
+      "flags": ["flag-3", "flag-4"]
+    },
+    {
+      "id": "level-2",
+      "name": "Level 2",
+      "sequence": 3,
+      "intro_text": "Level 1 folds away behind you. Level 2 is deeper, and time doesn't behave the same way down here. Memories blur at the edges. Somewhere in this layer is another artifact, and another door. Find both, and you're one step closer to what Robert was sent to steal.",
+      "flags": ["flag-5", "flag-6"]
+    },
+    {
+      "id": "level-3",
+      "name": "Level 3",
+      "sequence": 4,
+      "intro_text": "This layer feels different. The others were built - this one feels alive, and it knows you're here. Somewhere inside is an artifact worth guarding, and a door worth locking.",
+      "flags": ["flag-7", "flag-8"]
+    },
+    {
+      "id": "limbo",
+      "name": "Limbo",
+      "sequence": 5,
+      "intro_text": "There are no walls here. No rules. Time doesn't pass - it just is. Reality is a rumor you almost remember. But there's a way out, if you can find it - straight up, no layers in between.",
+      "flags": ["flag-9"]
+    },
+    {
+      "id": "level-2-return",
+      "name": "Level 2 (Ascending)",
+      "sequence": 6,
+      "intro_text": "Limbo dissolves behind you. Level 2 comes back into focus - the same artifact still sitting where you left it. Except now you're seeing it with different eyes.",
+      "flags": ["flag-10"]
+    },
+    {
+      "id": "level-1-return",
+      "name": "Level 1 (Ascending)",
+      "sequence": 7,
+      "intro_text": "Level 1. You know this place - the false trails, the details you ignored the first time. Everything looks exactly like it did before. Except now you know it's a dream.",
+      "flags": ["flag-11"]
+    }
+  ],
+  "challenges": [
+    {
+      "id": "flag-1",
+      "sequence": 1,
+      "stage": "reality",
+      "type": "evidence",
+      "title": "The Point of Entry",
+      "description": "A photograph, recovered under strange circumstances: a boarding pass, a passport, a flight to Sydney. It all looks ordinary - which is exactly the problem. Robert vanished right after this journey began, and this image is the only thing he left behind. Look past what the photo shows you, and find what it's hiding. Recover Flag 1.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 1"
+    },
+    {
+      "id": "flag-2",
+      "sequence": 2,
+      "stage": "reality",
+      "type": "evidence",
+      "title": "The Missing Half",
+      "description": "Every piece of evidence has a partner. Alongside the photograph is something easy to overlook - a detail nobody thought to check twice. On its own it means nothing. Next to the photograph, it means everything. The target is closing his eyes. Recover Flag 2 before he's fully asleep, because once he is, there's no more waiting in Reality.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 2"
+    },
+    {
+      "id": "flag-3",
+      "sequence": 3,
+      "stage": "level-1",
+      "type": "artifact",
+      "title": "The Architect's Token",
+      "description": "The dream gives you exactly what you expect to see, and hides the truth right next to it. Somewhere in Level 1 is an object that doesn't belong - an artifact, dropped by someone who came through here before you. Find it, and it will point you toward Flag 3.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 3"
+    },
+    {
+      "id": "flag-4",
+      "sequence": 4,
+      "stage": "level-1",
+      "type": "door",
+      "title": "The Door Below",
+      "description": "You found what Robert left behind - now find what he found next: the way down. A door is hidden somewhere in this layer, and it only opens once you understand what the artifact was pointing to. Open it. Recover Flag 4. There's no turning back after this.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 4"
+    },
+    {
+      "id": "flag-5",
+      "sequence": 5,
+      "stage": "level-2",
+      "type": "artifact",
+      "title": "The Second Artifact",
+      "description": "You don't know who left this one - the architect, someone who came before you, or someone who knew you'd be here. It doesn't matter. What matters is what it tells you. Find the artifact hidden in Level 2, understand it, and use it to recover Flag 5. Remember: an artifact isn't always a key. Sometimes it's a warning.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 5"
+    },
+    {
+      "id": "flag-6",
+      "sequence": 6,
+      "stage": "level-2",
+      "type": "door",
+      "title": "The Point of No Return",
+      "description": "For the first time, it hits you - you're not exploring this dream, you're descending through it. Reality is several layers above you now, and the memory of how you got here is already starting to blur. One door is left before the final layer. Find it. Recover Flag 6. Then step through.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 6"
+    },
+    {
+      "id": "flag-7",
+      "sequence": 7,
+      "stage": "level-3",
+      "type": "artifact",
+      "title": "The Architect's Fortress",
+      "description": "This layer doesn't feel built - it feels alive, and it knows you're here. Somewhere inside is a single artifact, guarded harder than anything you've found so far. It won't come easy, but it's the only thing standing between you and the way down. Find it. Recover Flag 7.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 7"
+    },
+    {
+      "id": "flag-8",
+      "sequence": 8,
+      "stage": "level-3",
+      "type": "door",
+      "title": "Too Deep",
+      "description": "One door left, and it's heavier than the others. Behind it is Limbo - the deepest a dream can go, further than this dream was ever meant to take you. Break through. Recover Flag 8.",
+      "warning": "Getting out of Limbo is nothing like getting in. Escaping it directly drops you straight back into Reality - fast, but with no guarantee of what you bring back, or what you leave behind. The other way is slower: climb back up, layer by layer, through Level 3, then Level 2, then Level 1, until you wake up on your own terms. Choose carefully. Once you're in Limbo, this is the only decision that matters.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 8"
+    },
+    {
+      "id": "flag-9",
+      "sequence": 9,
+      "stage": "limbo",
+      "type": "escape",
+      "title": "The Straight Way Out",
+      "description": "One last piece of the extraction is hidden somewhere in Limbo, and it doesn't lead deeper - it leads straight up. Find it, and recover Flag 9. The moment you do, Limbo lets go. No layers, no waiting. You're back in Reality before you even register leaving. Fast, and final - but you don't get to see what you pass on the way.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 9"
+    },
+    {
+      "id": "flag-10",
+      "sequence": 10,
+      "stage": "level-2-return",
+      "type": "ascension",
+      "title": "The Memory of Level 2",
+      "description": "What looked meaningless on the way down might make sense now. What looked like an answer might have been a distraction. Find your way through Level 2 again, and recover Flag 10.",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 10"
+    },
+    {
+      "id": "flag-11",
+      "sequence": 11,
+      "stage": "level-1-return",
+      "type": "ascension",
+      "title": "Wake Up",
+      "description": "The final path is hidden somewhere in Level 1. Find it, recover Flag 11, and wake up - because that's the only thing standing between you and Reality. The dream collapses behind you: Level 1, Level 2, Limbo - gone, one after another. You open your eyes. The room is real. The mission is over. You reach for your totem and spin it. It keeps spinning. Are you sure you're awake?",
+      "category": "Dream Sequence",
+      "flag_to_recover": "Flag 11"
+    }
+  ]
+}
