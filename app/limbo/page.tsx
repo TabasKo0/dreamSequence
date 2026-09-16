@@ -7,17 +7,15 @@ export default async function LimboPage() {
   const { team } = await enforceLevelAccess("Limbo");
 
   const supabase = await createClient();
-  const { data: challenge, error } = await supabase
+  const { data: challenges, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points, link")
-    //.eq("game_level", 'Limbo')
-    .eq("flag_number", team.current_flag)
-    .maybeSingle();
+    .order("flag_number", { ascending: true });
 
-  if (!challenge) {
-    console.error("Sending 404 because challenge was not found. Supabase error:", error);
+  if (!challenges || challenges.length === 0) {
+    console.error("Sending 404 because challenges were not found. Supabase error:", error);
     notFound();
   }
 
-  return <LimboClient challenge={challenge} team={team} />;
+  return <LimboClient challenges={challenges} team={team} />;
 }

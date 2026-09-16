@@ -7,30 +7,31 @@ import HintButton from "@/components/HintButton";
 import IntroSequence from "@/components/IntroSequence";
 import lore from "../../.lore.json";
 
-export default function LevelTwoClient({ challenge, team }: { challenge: any, team: any }) {
+export default function LevelTwoClient({ challenges, team }: { challenges: any[], team: any }) {
   // Intro sequence logic
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 5);
+  const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 5));
   
   // Tab logic for toggling signboards
-  // Default to the server's current flag, or 5 if undefined
-  const defaultTab = challenge?.flag_number === 6 ? 6 : 5;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 5;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
-    if (challenge?.flag_number === 6) {
-      setActiveTab(6);
+    if (challenges && challenges.length > 0) {
+      setActiveTab(challenges[challenges.length - 1].flag_number);
     }
-  }, [challenge?.flag_number]);
+  }, [challenges]);
+
+  const activeChallenge = challenges?.find((c) => c.flag_number === activeTab);
 
   // Fetch lore based on the ACTIVE tab (so the center box updates when clicking signboards)
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-2");
-  const title = activeLore?.title || challenge?.title || "LEVEL 2";
-  const description = activeLore?.description || challenge?.description || "Welcome to Level 2.";
+  const title = activeLore?.title || activeChallenge?.title || "LEVEL 2";
+  const description = activeLore?.description || activeChallenge?.description || "Welcome to Level 2.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-2")?.intro_text || "";
   
   // Status logic
-  const isFlag5Solved = challenge?.flag_number === 6;
+  const isFlag5Solved = team?.current_flag > 5;
 
   return (
     <main className="relative min-h-screen w-full bg-black text-white flex flex-col items-center justify-center overflow-hidden">
@@ -63,7 +64,7 @@ export default function LevelTwoClient({ challenge, team }: { challenge: any, te
             onClick={() => setActiveTab(5)}
             disabled={isFlag5Solved}
             className={`absolute top-[46%] left-[24%] -translate-y-1/2 -translate-x-1/2 w-[18vw] h-[55vh] md:w-[18vw] md:h-[55vh] z-20 transition-all duration-300 flex flex-col items-center justify-center
-              ${activeTab === 5 ? "bg-red-400/10 shadow-[0_0_25px_rgba(220,38,38,0.1)]" : "hover:bg-white/10"} 
+              ${activeTab === 5 ? "bg-[radial-gradient(ellipse_at_center,_rgba(248,113,113,0.12)_0%,_transparent_90%)]" : "hover:bg-white/5"} 
               ${isFlag5Solved ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
           >
             <div className="relative z-10 flex flex-col items-center pt-2 pointer-events-none">
@@ -94,10 +95,10 @@ export default function LevelTwoClient({ challenge, team }: { challenge: any, te
                   key={activeTab}
                 />
                 
-                {challenge?.link && (
+                {activeChallenge?.link && (
                   <div className="flex justify-center mb-8 w-full">
                     <a 
-                      href={challenge.link} 
+                      href={activeChallenge.link} 
                       download
                       className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                     >
@@ -120,7 +121,7 @@ export default function LevelTwoClient({ challenge, team }: { challenge: any, te
           <button
             onClick={() => setActiveTab(6)}
             className={`absolute top-[55%] right-[10%] md:right-[12.5%] translate-x-1/2 -translate-y-1/2 w-[20vw] h-[90vh] md:w-[22vw] md:h-[120vh] z-20 transition-all duration-300 flex flex-col items-center justify-center
-              ${activeTab === 6 ? "bg-red-400/10 shadow-[0_0_25px_rgba(220,38,38,0.1)]" : "hover:bg-white/10"}
+              ${activeTab === 6 ? "bg-[radial-gradient(ellipse_at_center,_rgba(248,113,113,0.12)_0%,_transparent_90%)] shadow-[0_0_25px_rgba(220,38,38,0.1)]" : "hover:bg-white/5"}
               cursor-pointer`}
                       style={{ clipPath: 'polygon(0% 20%, 115% 0%, 100% 100%, 0% 100%)' }}
 

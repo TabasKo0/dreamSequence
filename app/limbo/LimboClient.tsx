@@ -7,15 +7,16 @@ import IntroSequence from "@/components/IntroSequence";
 import RippleDistortion from "./ripple";
 import lore from "../../.lore.json";
 
-export default function LimboClient({ challenge, team }: { challenge: any, team: any }) {
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 9);
+export default function LimboClient({ challenges, team }: { challenges: any[], team: any }) {
+  const activeChallenge = challenges && challenges.length > 0 ? challenges[0] : null;
+  const [introFinished, setIntroFinished] = useState(!activeChallenge || activeChallenge.flag_number !== 9);
   
   // Flag 9 is the Limbo flag
-  const activeTab = 9;
+  const activeTab = activeChallenge?.flag_number || 9;
 
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "limbo");
-  const title = activeLore?.title || challenge?.title || "LIMBO";
-  const description = activeLore?.description || challenge?.description || "There are no walls here.";
+  const title = activeLore?.title || activeChallenge?.title || "LIMBO";
+  const description = activeLore?.description || activeChallenge?.description || "There are no walls here.";
   
   const currentIntroText = lore.stages.find(s => s.id === "limbo")?.intro_text || "";
 
@@ -79,10 +80,10 @@ export default function LimboClient({ challenge, team }: { challenge: any, team:
                   key={activeTab}
                 />
 
-                {challenge?.link && (
+                {activeChallenge?.link && (
                   <div className="flex justify-center mb-8 w-full">
                     <a 
-                      href={challenge.link} 
+                      href={activeChallenge.link} 
                       download
                       className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                     >

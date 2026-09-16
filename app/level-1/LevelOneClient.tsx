@@ -7,30 +7,31 @@ import HintButton from "@/components/HintButton";
 import IntroSequence from "@/components/IntroSequence";
 import lore from "../../.lore.json";
 
-export default function LevelOneClient({ challenge, team }: { challenge: any, team: any }) {
+export default function LevelOneClient({ challenges, team }: { challenges: any[], team: any }) {
   // Intro sequence logic
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 3);
+  const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 3));
   
   // Tab logic for toggling signboards
-  // Default to the server's current flag, or 3 if undefined
-  const defaultTab = challenge?.flag_number === 4 ? 4 : 3;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 3;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
-    if (challenge?.flag_number === 4) {
-      setActiveTab(4);
+    if (challenges && challenges.length > 0) {
+      setActiveTab(challenges[challenges.length - 1].flag_number);
     }
-  }, [challenge?.flag_number]);
+  }, [challenges]);
+
+  const activeChallenge = challenges?.find((c) => c.flag_number === activeTab);
 
   // Fetch lore based on the ACTIVE tab (so the center box updates when clicking signboards)
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-1");
-  const title = activeLore?.title || challenge?.title || "LEVEL 1";
-  const description = activeLore?.description || challenge?.description || "Welcome to Level 1.";
+  const title = activeLore?.title || activeChallenge?.title || "LEVEL 1";
+  const description = activeLore?.description || activeChallenge?.description || "Welcome to Level 1.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-1")?.intro_text || "";
   
   // Status logic
-  const isFlag3Solved = challenge?.flag_number === 4;
+  const isFlag3Solved = team?.current_flag > 3;
 
   return (
     <main className="relative min-h-screen w-full bg-black text-white flex flex-col items-center justify-center overflow-hidden">
@@ -94,10 +95,10 @@ export default function LevelOneClient({ challenge, team }: { challenge: any, te
                   key={activeTab}
                 />
                 
-                {challenge?.link && (
+                {activeChallenge?.link && (
                   <div className="flex justify-center mb-8 w-full">
                     <a 
-                      href={challenge.link} 
+                      href={activeChallenge.link} 
                       download
                       className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                     >

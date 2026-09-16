@@ -101,7 +101,7 @@ export default function HintButton({ flagNumber, unlockedHints = [] }: HintButto
           </svg>
           Hint
         </h4>
-        <p className="text-sm text-blue-100 whitespace-pre-line">{hintText}</p>
+        <p className="text-sm max-h-16 overflow-y-auto text-blue-100 whitespace-pre-line">{hintText}</p>
       </div>
     );
   }

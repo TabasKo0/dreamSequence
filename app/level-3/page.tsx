@@ -7,17 +7,15 @@ export default async function LevelThreePage() {
   const { team } = await enforceLevelAccess("Level 3");
 
   const supabase = await createClient();
-  const { data: challenge, error } = await supabase
+  const { data: challenges, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points, link")
-    //.eq("game_level", 'Level 3')
-    .eq("flag_number", team.current_flag)
-    .maybeSingle();
+    .order("flag_number", { ascending: true });
 
-  if (!challenge) {
-    console.error("Sending 404 because challenge was not found. Supabase error:", error);
+  if (!challenges || challenges.length === 0) {
+    console.error("Sending 404 because challenges were not found. Supabase error:", error, team.current_flag);
     notFound();
   }
 
-  return <LevelThreeClient challenge={challenge} team={team} />;
+  return <LevelThreeClient challenges={challenges} team={team} />;
 }

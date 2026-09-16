@@ -7,9 +7,10 @@ import IntroSequence from "@/components/IntroSequence";
 import HintButton from "@/components/HintButton";
 import lore from "../../.lore.json";
 
-export default function LevelTwoReturnClient({ challenge, team }: { challenge: any, team?: any }) {
+export default function LevelTwoReturnClient({ challenges, team }: { challenges: any[], team?: any }) {
+  const activeChallenge = challenges && challenges.length > 0 ? challenges[0] : null;
   // Intro sequence logic
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 11);
+  const [introFinished, setIntroFinished] = useState(!activeChallenge || activeChallenge.flag_number !== 11);
   
   // Tab logic for toggling signboards
   // Default to 11 for the return level
@@ -17,8 +18,8 @@ export default function LevelTwoReturnClient({ challenge, team }: { challenge: a
 
   // Fetch lore
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-2-return");
-  const title = activeLore?.title || challenge?.title || "LEVEL 2 RETURN";
-  const description = activeLore?.description || challenge?.description || "Back through Level 2.";
+  const title = activeLore?.title || activeChallenge?.title || "LEVEL 2 RETURN";
+  const description = activeLore?.description || activeChallenge?.description || "Back through Level 2.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-2-return")?.intro_text || "";
 
@@ -74,15 +75,15 @@ export default function LevelTwoReturnClient({ challenge, team }: { challenge: a
                 </p>
 
                 <HintButton 
-                  flagNumber={challenge?.flag_number} 
+                  flagNumber={activeChallenge?.flag_number} 
                   unlockedHints={team?.unlocked_hints} 
-                  key={challenge?.flag_number}
+                  key={activeChallenge?.flag_number}
                 />
                 
-                {challenge?.link && (
+                {activeChallenge?.link && (
                   <div className="flex justify-center mb-8 w-full">
                     <a 
-                      href={challenge.link} 
+                      href={activeChallenge.link} 
                       download
                       className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                     >

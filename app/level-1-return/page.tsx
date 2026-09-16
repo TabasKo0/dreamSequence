@@ -7,23 +7,15 @@ export default async function LevelOneReturnPage() {
   const { team } = await enforceLevelAccess("level-1-return");
 
   const supabase = await createClient();
-  const { data: challenge, error } = await supabase
+  const { data: challenges, error } = await supabase
     .from("challenges")
     .select("flag_number, game_level, title, category, description, points, link")
-    .eq("flag_number", team.current_flag)
-    .maybeSingle();
+    .order("flag_number", { ascending: true });
 
-  if (!challenge) {
-    const { data: altChallenge } = await supabase
-      .from("challenges")
-      .select("flag_number, game_level, title, category, description, points, link")
-      //.eq("game_level", 'Level 1 Return')
-      .eq("flag_number", team.current_flag)
-      .maybeSingle();
-      
-    if (!altChallenge) notFound();
-    return <LevelOneReturnClient challenge={altChallenge} team={team} />;
+  if (!challenges || challenges.length === 0) {
+    console.error("Sending 404 because challenges were not found.", error);
+    notFound();
   }
 
-  return <LevelOneReturnClient challenge={challenge} team={team} />;
+  return <LevelOneReturnClient challenges={challenges} team={team} />;
 }

@@ -7,28 +7,28 @@ import HintButton from "@/components/HintButton";
 import IntroSequence from "@/components/IntroSequence";
 import lore from "../../.lore.json";
 
-export default function LevelThreeClient({ challenge, team }: { challenge: any, team: any }) {
+export default function LevelThreeClient({ challenges, team }: { challenges: any[], team: any }) {
   // Intro sequence logic
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 7);
+  const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 7));
   
   // Tab logic for toggling doors
-  let defaultTab = 7;
-  if (challenge?.flag_number === 8) defaultTab = 8;
-  if (challenge?.flag_number === 10) defaultTab = 10;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 7;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
-    if (challenge?.flag_number === 8 || challenge?.flag_number === 10 || challenge?.flag_number === 7) {
-      setActiveTab(challenge.flag_number);
+    if (challenges && challenges.length > 0) {
+      setActiveTab(challenges[challenges.length - 1].flag_number);
     }
-  }, [challenge?.flag_number]);
+  }, [challenges]);
 
   const currentIntroText = lore.stages.find(s => s.id === "level-3")?.intro_text || "";
   
+  const activeChallenge = challenges?.find((c) => c.flag_number === activeTab);
+
   // Status logic
-  const isFlag7Solved = challenge?.flag_number > 7 && challenge?.flag_number !== 7;
-  const isFlag8Solved = challenge?.flag_number > 8 && challenge?.flag_number !== 8;
-  const isFlag10Solved = challenge?.flag_number > 10 && challenge?.flag_number !== 10;
+  const isFlag7Solved = team?.current_flag > 7;
+  const isFlag8Solved = team?.current_flag > 8;
+  const isFlag10Solved = team?.current_flag > 10;
 
   // Render a specific door interactable or its expanded dialogue box
   const renderDoor = (
@@ -42,8 +42,8 @@ export default function LevelThreeClient({ challenge, team }: { challenge: any, 
     
     if (isActive) {
       const activeLore = lore.challenges.find((c) => c.sequence === flagNumber) || lore.challenges.find((c) => c.stage === "level-3");
-      const title = activeLore?.title || challenge?.title || `FLAG ${flagNumber}`;
-      const description = activeLore?.description || challenge?.description || "...";
+      const title = activeLore?.title || activeChallenge?.title || `FLAG ${flagNumber}`;
+      const description = activeLore?.description || activeChallenge?.description || "...";
 
       return (
         <div className={`absolute z-30 transition-all duration-500 w-[30vw] min-w-[320px] max-w-[90vw] ${positionClasses} -translate-x-1/2 -translate-y-1/2`}>
@@ -65,10 +65,10 @@ export default function LevelThreeClient({ challenge, team }: { challenge: any, 
                 key={flagNumber}
               />
               
-              {challenge?.link && (
+              {activeChallenge?.link && (
                   <div className="flex justify-center mb-8 w-full">
                     <a 
-                      href={challenge.link} 
+                      href={activeChallenge.link} 
                       download
                       className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                     >

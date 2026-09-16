@@ -9,17 +9,22 @@ import HintButton from "@/components/HintButton";
 import lore from "../../.lore.json";
 
 interface LevelZeroClientProps {
-  challenge: any;
+  challenges: any[];
   team: any;
 }
 
-export default function LevelZeroClient({ challenge, team }: LevelZeroClientProps) {
-  const [introFinished, setIntroFinished] = useState(challenge?.flag_number !== 1);
+export default function LevelZeroClient({ challenges, team }: LevelZeroClientProps) {
+  const flag1 = challenges?.find((c: any) => c.flag_number === 1);
+  const flag2 = challenges?.find((c: any) => c.flag_number === 2);
+
+  const activeChallenge = challenges?.find((c: any) => c.flag_number === team?.current_flag) || flag1 || flag2;
+  const introFinishedDefault = !challenges?.some((c: any) => c.flag_number === 1);
+  const [introFinished, setIntroFinished] = useState(introFinishedDefault);
   const [isLiked, setIsLiked] = useState(false);
   
-  const loreChallenge = lore.challenges.find((c) => c.sequence === challenge?.flag_number) || lore.challenges.find((c) => c.stage === "reality");
-  const title = loreChallenge?.title || challenge?.title || "PROLOGUE";
-  const description = loreChallenge?.description || challenge?.description || "";
+  const loreChallenge = lore.challenges.find((c) => c.sequence === activeChallenge?.flag_number) || lore.challenges.find((c) => c.stage === "reality");
+  const title = loreChallenge?.title || activeChallenge?.title || "PROLOGUE";
+  const description = loreChallenge?.description || activeChallenge?.description || "";
   
   const currentIntroText = lore.stages.find(s => s.id === "reality")?.intro_text || "";
 
@@ -58,15 +63,15 @@ export default function LevelZeroClient({ challenge, team }: LevelZeroClientProp
               </p>
 
               <HintButton 
-                flagNumber={challenge?.flag_number} 
+                flagNumber={activeChallenge?.flag_number} 
                 unlockedHints={team?.unlocked_hints} 
-                key={challenge?.flag_number}
+                key={activeChallenge?.flag_number}
               />
               
-              {challenge?.link && (
+              {activeChallenge?.link && (
                 <div className="flex justify-start w-full">
                   <a 
-                    href={challenge.link} 
+                    href={activeChallenge.link} 
                     download
                     className="px-6 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider hover:bg-white/20 transition-all flex items-center gap-2"
                   >
@@ -84,8 +89,9 @@ export default function LevelZeroClient({ challenge, team }: LevelZeroClientProp
 
       {/* Right Side: Ticket Image or Portal */}
       {introFinished && (
-        <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center animate-in fade-in duration-1000">
-        {challenge?.flag_number === 1 || !challenge?.flag_number ? (
+        <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center animate-in fade-in duration-1000 flex-col gap-8">
+        
+        {flag1 && (
           <div className="relative h-full aspect-[10/16] max-w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
             <Image
               src="/ticket.png"
@@ -161,7 +167,9 @@ export default function LevelZeroClient({ challenge, team }: LevelZeroClientProp
               </Link>
             </div>
           </div>
-        ) : challenge?.flag_number === 2 ? (
+        )}
+        
+        {flag2 && (
           <div className="relative w-full max-w-sm rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-8 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-6">
             <div className="absolute inset-0 bg-white/5"></div>
             <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
@@ -180,7 +188,8 @@ export default function LevelZeroClient({ challenge, team }: LevelZeroClientProp
               </div>
             </div>
           </div>
-        ) : null}
+        )}
+
         </div>
       )}
     </main>
