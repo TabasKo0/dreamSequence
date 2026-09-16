@@ -18,8 +18,8 @@ export default function LevelTwoReturnClient({ challenges, team }: { challenges:
 
   // Fetch lore
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-2-return");
-  const title = activeLore?.title || activeChallenge?.title || "LEVEL 2 RETURN";
-  const description = activeLore?.description || activeChallenge?.description || "Back through Level 2.";
+  const title = activeChallenge?.title || activeLore?.title || "LEVEL 2 RETURN";
+  const description = activeChallenge?.description || activeLore?.description || "Back through Level 2.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-2-return")?.intro_text || "";
 

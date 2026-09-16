@@ -17,8 +17,8 @@ export default function LevelOneReturnClient({ challenges, team }: { challenges:
 
   // Fetch lore
   const activeLore = lore.challenges.find((c) => c.sequence === activeChallenge?.flag_number) || lore.challenges.find((c) => c.stage === "level-1-return");
-  const title = activeLore?.title || activeChallenge?.title || "LEVEL 1 (RETURN)";
-  const description = activeLore?.description || activeChallenge?.description || "You are back where you started.";
+  const title = activeChallenge?.title || activeLore?.title || "LEVEL 1 (RETURN)";
+  const description = activeChallenge?.description || activeLore?.description || "You are back where you started.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-1-return")?.intro_text || "";
 

@@ -12,12 +12,12 @@ export default function LevelTwoClient({ challenges, team }: { challenges: any[]
   const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 5));
   
   // Tab logic for toggling signboards
-  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 5;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[0].flag_number : 5;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
     if (challenges && challenges.length > 0) {
-      setActiveTab(challenges[challenges.length - 1].flag_number);
+      setActiveTab(challenges[0].flag_number);
     }
   }, [challenges]);
 
@@ -25,8 +25,8 @@ export default function LevelTwoClient({ challenges, team }: { challenges: any[]
 
   // Fetch lore based on the ACTIVE tab (so the center box updates when clicking signboards)
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-2");
-  const title = activeLore?.title || activeChallenge?.title || "LEVEL 2";
-  const description = activeLore?.description || activeChallenge?.description || "Welcome to Level 2.";
+  const title = activeChallenge?.title || activeLore?.title || "LEVEL 2";
+  const description = activeChallenge?.description || activeLore?.description || "Welcome to Level 2.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-2")?.intro_text || "";
   

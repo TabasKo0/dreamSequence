@@ -23,8 +23,8 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
   const [isLiked, setIsLiked] = useState(false);
   
   const loreChallenge = lore.challenges.find((c) => c.sequence === activeChallenge?.flag_number) || lore.challenges.find((c) => c.stage === "reality");
-  const title = loreChallenge?.title || activeChallenge?.title || "PROLOGUE";
-  const description = loreChallenge?.description || activeChallenge?.description || "";
+  const title = activeChallenge?.title || loreChallenge?.title || "PROLOGUE";
+  const description = activeChallenge?.description || loreChallenge?.description || "";
   
   const currentIntroText = lore.stages.find(s => s.id === "reality")?.intro_text || "";
 

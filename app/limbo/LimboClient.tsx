@@ -15,8 +15,8 @@ export default function LimboClient({ challenges, team }: { challenges: any[], t
   const activeTab = activeChallenge?.flag_number || 9;
 
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "limbo");
-  const title = activeLore?.title || activeChallenge?.title || "LIMBO";
-  const description = activeLore?.description || activeChallenge?.description || "There are no walls here.";
+  const title = activeChallenge?.title || activeLore?.title || "LIMBO";
+  const description = activeChallenge?.description || activeLore?.description || "There are no walls here.";
   
   const currentIntroText = lore.stages.find(s => s.id === "limbo")?.intro_text || "";
 

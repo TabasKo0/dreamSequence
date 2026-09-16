@@ -8,7 +8,6 @@ export default function BottomNav() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Updates", href: "/updates" },
     { name: "DASHBOARD", href: "/dashboard" },
   ];
 

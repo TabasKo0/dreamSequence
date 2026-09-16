@@ -12,12 +12,12 @@ export default function LevelThreeClient({ challenges, team }: { challenges: any
   const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 7));
   
   // Tab logic for toggling doors
-  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 7;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[0].flag_number : 7;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
     if (challenges && challenges.length > 0) {
-      setActiveTab(challenges[challenges.length - 1].flag_number);
+      setActiveTab(challenges[0].flag_number);
     }
   }, [challenges]);
 
@@ -42,8 +42,8 @@ export default function LevelThreeClient({ challenges, team }: { challenges: any
     
     if (isActive) {
       const activeLore = lore.challenges.find((c) => c.sequence === flagNumber) || lore.challenges.find((c) => c.stage === "level-3");
-      const title = activeLore?.title || activeChallenge?.title || `FLAG ${flagNumber}`;
-      const description = activeLore?.description || activeChallenge?.description || "...";
+      const title = activeChallenge?.title || activeLore?.title || `FLAG ${flagNumber}`;
+      const description = activeChallenge?.description || activeLore?.description || "...";
 
       return (
         <div className={`absolute z-30 transition-all duration-500 w-[30vw] min-w-[320px] max-w-[90vw] ${positionClasses} -translate-x-1/2 -translate-y-1/2`}>

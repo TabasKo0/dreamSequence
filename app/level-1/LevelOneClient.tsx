@@ -25,8 +25,8 @@ export default function LevelOneClient({ challenges, team }: { challenges: any[]
 
   // Fetch lore based on the ACTIVE tab (so the center box updates when clicking signboards)
   const activeLore = lore.challenges.find((c) => c.sequence === activeTab) || lore.challenges.find((c) => c.stage === "level-1");
-  const title = activeLore?.title || activeChallenge?.title || "LEVEL 1";
-  const description = activeLore?.description || activeChallenge?.description || "Welcome to Level 1.";
+  const title = activeChallenge?.title || activeLore?.title || "LEVEL 1";
+  const description = activeChallenge?.description || activeLore?.description || "Welcome to Level 1.";
   
   const currentIntroText = lore.stages.find(s => s.id === "level-1")?.intro_text || "";
   
