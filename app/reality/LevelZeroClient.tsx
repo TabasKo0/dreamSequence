@@ -176,14 +176,7 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
             <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
             <div className="relative z-10 w-full flex flex-col items-center gap-6">
               <h2 className="text-xl font-semibold text-white tracking-wide text-center">Second Checkpoint</h2>
-              <Link
-                href="https://saito-airlines.onrender.com/"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors text-center"
-              >
-                Access Flight Portal
-              </Link>
+             
               <div className="w-full">
                 <FlagSubmission targetFlagNumber={2} />
               </div>
