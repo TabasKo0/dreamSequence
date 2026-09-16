@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
-  const vantaRef = useRef(null);
+  const vantaRef = useRef<HTMLDivElement>(null);
   const [vantaEffect, setVantaEffect] = useState<any>(null);
 
   const router = useRouter();
@@ -22,38 +22,55 @@ export default function LoginPage() {
 
   useEffect(() => {
     let effect: any = null;
+    let isMounted = true;
     
     const initVanta = async () => {
-      if (!vantaEffect) {
-        // Dynamically import THREE and Vanta to prevent SSR errors
-        const THREE = await import("three");
-        const FOG = (await import("vanta/dist/vanta.fog.min")).default;
-        
-        effect = FOG({
-          el: vantaRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          highlightColor: 0xa6b4d1,
-          midtoneColor: 0x2a2a36,
-          lowlightColor: 0x5290bb,
-          baseColor: 0x955050,
-          speed: 5.0
-        });
-        setVantaEffect(effect);
+      // Initialize only if the ref exists and we haven't already created the effect
+      if (vantaRef.current && !effect) {
+        try {
+          // Dynamically import THREE to prevent SSR issues in Next.js
+          const THREE = await import("three");
+          
+          // Explicitly assign THREE to window for Vanta.js
+          if (typeof window !== "undefined") {
+            (window as any).THREE = THREE;
+          }
+          
+          const FOG = (await import("vanta/dist/vanta.fog.min")).default;
+          
+          if (isMounted) {
+            effect = FOG({
+              el: vantaRef.current,
+              THREE: THREE,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.00,
+              minWidth: 200.00,
+              highlightColor: "#a6b4d1",
+              midtoneColor: "#2a2a36",
+              lowlightColor: "#5290bb",
+              baseColor: "#955050",
+              speed: 5.0
+            });
+            setVantaEffect(effect);
+          }
+        } catch (error) {
+          console.error("Vanta initialization failed:", error);
+        }
       }
     };
     
     initVanta();
 
+    // Proper cleanup to prevent WebGL memory leaks on unmount
     return () => {
-      if (effect) effect.destroy();
-      if (vantaEffect) vantaEffect.destroy();
+      isMounted = false;
+      if (effect) {
+        effect.destroy();
+      }
     };
-  }, [vantaEffect]);
+  }, []); // Empty dependency array ensures this only runs on mount
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
