@@ -78,12 +78,12 @@ export default function LevelZeroClient({ challenge }: LevelZeroClientProps) {
       {introFinished && (
         <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center animate-in fade-in duration-1000">
         {challenge?.flag_number === 1 || !challenge?.flag_number ? (
-          <div className="relative h-full aspect-[9/16] max-w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
+          <div className="relative h-full aspect-[10/16] max-w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
             <Image
               src="/ticket.png"
               alt="Flight Ticket to Sydney"
               fill
-              sizes="(max-width: 1024px) 100vw, 56vh"
+              sizes=" 120vw, 56vh"
               className="object-cover object-center select-none pointer-events-none"
               priority
             />

@@ -176,9 +176,9 @@ export default async function Dashboard() {
               <p className="font-semibold text-lg">{team ? team.name : "No team yet"}</p>
             </div>
             <div className="rounded-2xl bg-white/5 border border-white/50 p-4 flex flex-col justify-center min-h-[80px]">
-              <p className="text-xs text-white/50 mb-1">Created</p>
-              <p className="font-semibold text-lg text-white/50">
-                {team ? new Date(team.created_at).toLocaleDateString() : "--"}
+              <p className="text-m text-white/50 mb-1">Score</p>
+              <p className="font-semibold text-lg text-red-400">
+                {team ? team.score : "--"}
               </p>
             </div>
           </div>
