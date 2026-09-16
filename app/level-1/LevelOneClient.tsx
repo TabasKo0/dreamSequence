@@ -12,12 +12,12 @@ export default function LevelOneClient({ challenges, team }: { challenges: any[]
   const [introFinished, setIntroFinished] = useState(!challenges?.some(c => c.flag_number === 3));
   
   // Tab logic for toggling signboards
-  const defaultTab = challenges && challenges.length > 0 ? challenges[challenges.length - 1].flag_number : 3;
+  const defaultTab = challenges && challenges.length > 0 ? challenges[0].flag_number : 3;
   const [activeTab, setActiveTab] = useState<number>(defaultTab);
 
   useEffect(() => {
     if (challenges && challenges.length > 0) {
-      setActiveTab(challenges[challenges.length - 1].flag_number);
+      setActiveTab(challenges[0].flag_number);
     }
   }, [challenges]);
 
