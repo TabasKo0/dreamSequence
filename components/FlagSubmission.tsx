@@ -84,7 +84,7 @@ export default function FlagSubmission({ targetFlagNumber, variant = "default" }
 
       {variant === "pill" ? (
         <>
-          <form action={formAction} className="relative flex-1 flex items-center bg-white/[0.04] hover:bg-white/[0.08] focus-within:bg-white/[0.10] backdrop-blur-[2px] rounded-full border border-white/20 px-4 py-2.5 transition-all duration-200">
+          <form id="pill-form" action={formAction} className="relative flex-1 flex items-center bg-white/[0.04] hover:bg-white/[0.08] focus-within:bg-white/[0.10] backdrop-blur-[2px] rounded-full border border-white/20 px-4 py-2.5 transition-all duration-200">
             <input type="hidden" name="targetFlagNumber" value={targetFlagNumber} />
             <PillInput />
           </form>

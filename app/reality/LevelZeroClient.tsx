@@ -91,7 +91,7 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
       {introFinished && (
         <div className="h-screen flex-shrink-0 p-4 pr-18 bg-black flex items-center justify-center animate-in fade-in duration-1000 flex-col gap-8">
         
-        {flag1 && (
+        {flag1 && team?.current_flag === 1 && (
           <div className="relative h-full aspect-[10/16] max-w-full overflow-hidden rounded-3xl shadow-2xl bg-black">
             <Image
               src="/ticket.png"
@@ -108,12 +108,14 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
                 <FlagSubmission targetFlagNumber={1} variant="pill" />
               </div>
 
-              {/* Like Button */}
-              <button
-                type="button"
-                onClick={() => setIsLiked(!isLiked)}
+              {/* Like Button (Now Insta Link) */}
+              <Link
+                href="https://www.instagram.com/acmw_vitc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsLiked(true)}
                 className="p-1.5 transition-transform active:scale-125 hover:opacity-90 focus:outline-none flex items-center justify-center cursor-pointer mb-2"
-                aria-label="Like story"
+                aria-label="Instagram link"
               >
                 {isLiked ? (
                   <svg
@@ -140,15 +142,14 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
                     />
                   </svg>
                 )}
-              </button>
+              </Link>
 
-              {/* Direct Message (Paper Airplane) Button */}
-              <Link
-                href="https://www.instagram.com/acmw_vitc/"
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* Direct Message (Paper Airplane) - Now Submit Button */}
+              <button
+                type="submit"
+                form="pill-form"
                 className="p-1.5 transition-transform active:scale-110 hover:opacity-80 focus:outline-none flex items-center justify-center cursor-pointer mb-2"
-                aria-label="Direct message"
+                aria-label="Submit flag"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -164,12 +165,12 @@ export default function LevelZeroClient({ challenges, team }: LevelZeroClientPro
                     d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
         )}
         
-        {flag2 && (
+        {flag2 && team?.current_flag === 2 && (
           <div className="relative w-full max-w-sm rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-8 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-6">
             <div className="absolute inset-0 bg-white/5"></div>
             <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
