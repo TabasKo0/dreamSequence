@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/LogoutButton";
+import { UserTicket } from "@/components/UserTicket";
 import { redirect } from "next/navigation";
 
 export default async function AccountPage() {
@@ -67,8 +68,8 @@ export default async function AccountPage() {
             </div>
 
             {/* Right Half */}
-            <div className="flex-1 w-full md:w-1/2 flex flex-col gap-3">
-              {/* Right half content */}
+            <div className="flex-1 w-full md:w-1/2 flex flex-col gap-3 items-center justify-center">
+              <UserTicket userId={user.id} />
             </div>
           </div>
           

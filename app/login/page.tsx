@@ -88,7 +88,7 @@ export default function LoginPage() {
       setErrorMsg(error.message);
       setIsLoading(false);
     } else {
-      router.push("/intro");
+      router.push("/dashboard");
       router.refresh();
     }
   };

@@ -40,6 +40,7 @@ export default function VictoryClient({ challenges, team }: { challenges: any[],
       </div>
 
       {/* Invisible Box for Flag 13 */}
+      {team?.current_flag < 14 && (
       <div className="absolute top-10 left-10 z-30 border-2 border-red-500 w-100 p-6 rounded-xl transition-all opacity-5 hover:opacity-100 hover:bg-black/60 hover:backdrop-blur-sm group flex flex-col items-center">
         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col w-full">
           <p className="text-xs text-red-400 mb-4 font-mono uppercase tracking-widest text-center">Hidden Terminal - Flag 13</p>
@@ -69,6 +70,7 @@ export default function VictoryClient({ challenges, team }: { challenges: any[],
           )}
         </div>
       </div>
+      )}
 
     </main>
   );

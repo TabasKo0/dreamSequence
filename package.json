@@ -12,10 +12,12 @@
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.116.0",
     "@types/three": "^0.185.4",
+    "html5-qrcode": "^2.3.8",
     "next": "16.3.4",
     "ogl": "^1.0.11",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-qr-code": "^2.2.0",
     "three": "^0.121.1",
     "vanta": "^0.5.24"
   },

@@ -78,3 +78,26 @@ export async function enforceAdminAccess() {
 
   return user;
 }
+
+export async function enforceScannerAccess() {
+  const supabase = await createClient();
+  
+  // 1. Secure Session Check
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (!user || error) {
+    redirect("/login");
+  }
+
+  // 2. Scanner Permission Check
+  const { data: profile } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+    
+  if (!profile || (!profile.is_admin && !profile.can_scan)) {
+    redirect("/dashboard");
+  }
+
+  return user;
+}
