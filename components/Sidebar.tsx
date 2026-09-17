@@ -127,7 +127,7 @@ export default function Sidebar() {
       </div>
 
       {/* Dynamic Event Status in Sidebar */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
+      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs mt-3">
         <span className="text-white/60 font-medium">Event</span>
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">

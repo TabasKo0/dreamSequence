@@ -39,12 +39,12 @@ export default async function Dashboard() {
         </header>
 
         {/* Status Banner */}
-        <div className="relative w-full rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-6 md:p-8 mb-6 flex items-center shadow-2xl overflow-hidden min-h-[140px]">
+        <div className="relative w-full rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-6 md:p-8 mb-6 flex items-center shadow-2xl overflow-hidden min-h-72 md:min-h-36">
           <div className="absolute inset-0 bg-white/5"></div>
           <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
           
           <div className="flex-1 flex flex-col md:flex-row items-center gap-6 md:gap-8 z-10">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 relative flex items-center justify-center mix-blend-screen opacity-80">
+            <div className="w-36 h-36 sm:w-32 sm:h-32 md:w-48 md:h-48 relative flex items-center justify-center mix-blend-screen opacity-80">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" className="w-full h-full">
 <defs>
   <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -157,7 +157,7 @@ export default async function Dashboard() {
         </div>
 
         {/* Team Details & Members */}
-        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-[200px] mb-6">
+        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-72 mb-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-xl font-semibold tracking-wide">Team Details</h3>
             <Link 
@@ -181,7 +181,7 @@ export default async function Dashboard() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-6">
+          <div className="border-t border-white/10 pt-6 hidden md:block">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white/60 mb-4">Team Members</h4>
             {members.length > 0 ? (
               <div className="space-y-3">
@@ -201,7 +201,7 @@ export default async function Dashboard() {
         </div>
 
         {/* Bottom padding for fixed dock */}
-        <div className="h-10 shrink-0"></div>
+        <div className="md:h-10 shrink-0"></div>
       </main>
   );
 }

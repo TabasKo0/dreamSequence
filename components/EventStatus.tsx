@@ -103,7 +103,7 @@ export default function EventStatus({ initialSettings }: EventStatusProps) {
   return (
     <>
       <div className="z-10">
-        <h2 className="text-3xl font-light tracking-wide mb-1 flex items-center gap-2">
+        <h2 className="text-3xl nowrap font-light tracking-wide mb-1 flex items-center gap-2">
           {statusTitle}
         </h2>
         <p className="text-sm text-white/50">{statusSubtitle}</p>

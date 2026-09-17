@@ -481,7 +481,7 @@ export default function TeamManager() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="bg-white/5 p-6 rounded-2xl border border-white/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="bg-white/5 p-4 rounded-2xl border border-white/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <p className="text-sm text-white/50 mb-1">Your Team</p>
               <h2 className="text-3xl font-bold text-white">{team.name}</h2>
