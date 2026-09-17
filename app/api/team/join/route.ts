@@ -12,6 +12,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // 0. Check CTF Settings
+    const { data: settings } = await supabase.from('ctf_settings').select('team_join_enabled').eq('id', 1).single()
+    if (settings && settings.team_join_enabled === false) {
+      return NextResponse.json({ error: 'Joining teams is currently disabled.' }, { status: 403 })
+    }
+
     const { join_token } = await request.json()
     if (!join_token || typeof join_token !== 'string') {
       return NextResponse.json({ error: 'Join token is required.' }, { status: 400 })

@@ -11,6 +11,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // 0. Check CTF Settings
+    const { data: settings } = await supabase.from('ctf_settings').select('team_disband_enabled').eq('id', 1).single()
+    if (settings && settings.team_disband_enabled === false) {
+      return NextResponse.json({ error: 'Team disbanding is currently disabled by the organizers.' }, { status: 403 })
+    }
+
     // 1. Get caller's current team
     const { data: callerProfile, error: profileError } = await supabase
       .from('users')
@@ -62,16 +68,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Cannot disband a team that has already scored points.' }, { status: 400 })
     }
 
-    // Check if team disbanding is enabled in ctf_settings
-    const { data: ctfSettings } = await supabase
-      .from('ctf_settings')
-      .select('team_disband_enabled')
-      .eq('id', 1)
-      .single()
 
-    if (ctfSettings && ctfSettings.team_disband_enabled === false) {
-      return NextResponse.json({ error: 'Team disbanding is currently disabled by the organizers.' }, { status: 403 })
-    }
 
     // 4. Disband the team: set team_id = null for all members
     const { error: membersUpdateError } = await supabase

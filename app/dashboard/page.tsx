@@ -132,9 +132,7 @@ export default async function Dashboard() {
               PATHWAY TO FLAG {team ? team.current_flag : 1}
             </h3>
 
-            <p className="text-white/70 text-sm max-w-2xl mb-6 leading-relaxed">
-              So it begins...
-            </p>
+            
 
             <div>
               {team ? (

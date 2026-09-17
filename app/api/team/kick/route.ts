@@ -10,6 +10,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // 0. Check CTF Settings
+    const { data: settings } = await supabase.from('ctf_settings').select('team_leave_enabled').eq('id', 1).single()
+    if (settings && settings.team_leave_enabled === false) {
+      return NextResponse.json({ error: 'Leaving or modifying team rosters is currently disabled.' }, { status: 403 })
+    }
+
     const { targetUserId } = await request.json()
     if (!targetUserId || typeof targetUserId !== 'string') {
       return NextResponse.json({ error: 'Target user ID is required.' }, { status: 400 })
@@ -58,16 +64,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Target user is not on your team.' }, { status: 400 })
     }
 
-    // Check if team leaving / roster modification is enabled in ctf_settings
-    const { data: ctfSettings } = await supabase
-      .from('ctf_settings')
-      .select('team_leave_enabled')
-      .eq('id', 1)
-      .single()
 
-    if (ctfSettings && ctfSettings.team_leave_enabled === false) {
-      return NextResponse.json({ error: 'Leaving or modifying team rosters is currently disabled.' }, { status: 403 })
-    }
 
     // 4. Kick the target
     const { error: updateError } = await supabase

@@ -28,7 +28,6 @@ type CtfSettings = {
   team_leave_enabled?: boolean;
   team_disband_enabled?: boolean;
   max_team_size?: number;
-  updated_at?: string;
 };
 
 export default function TeamManager() {
@@ -595,7 +594,7 @@ export default function TeamManager() {
 
             <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-end items-end sm:items-center gap-3">
               {currentUserId === team.owner_id ? (
-                isTeamDisbandEnabled ? (
+                isTeamLeaveEnabled ? (
                   <button
                     onClick={handleDisbandTeam}
                     disabled={actionLoading}

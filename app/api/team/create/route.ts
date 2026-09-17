@@ -11,6 +11,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    // 0. Check CTF Settings
+    const { data: settings } = await supabase.from('ctf_settings').select('team_creation_enabled').eq('id', 1).single()
+    if (settings && settings.team_creation_enabled === false) {
+      return NextResponse.json({ error: 'Team creation is currently disabled by the organizers.' }, { status: 403 })
+    }
+
     const { name } = await request.json()
     if (!name || typeof name !== 'string') {
       return NextResponse.json({ error: 'Team name is required.' }, { status: 400 })

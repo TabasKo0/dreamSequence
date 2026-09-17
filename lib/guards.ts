@@ -42,3 +42,26 @@ export async function enforceLevelAccess(requiredGameLevel: string) {
 
   return { user, team };
 }
+
+export async function enforceAdminAccess() {
+  const supabase = await createClient();
+  
+  // 1. Secure Session Check
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (!user || error) {
+    redirect("/login");
+  }
+
+  // 2. Admin Check
+  const { data: profile } = await supabase
+    .from("users")
+    .select("is_admin")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || profile.is_admin !== true) {
+    redirect("/dashboard");
+  }
+
+  return user;
+}

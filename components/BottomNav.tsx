@@ -8,7 +8,7 @@ export default function BottomNav() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "DASHBOARD", href: "/dashboard" },
+    { name: "Dashboard", href: "/dashboard" },
   ];
 
   const isItemActive = (href: string) => {
