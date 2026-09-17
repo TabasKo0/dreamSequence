@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { verifyEmailAction } from "@/app/actions/authActions";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
@@ -97,6 +98,13 @@ export default function LoginPage() {
     setIsLoading(true);
     setErrorMsg("");
     setSuccessMsg("");
+
+    const res = await verifyEmailAction(email);
+    if (!res.success) {
+      setErrorMsg(res.message);
+      setIsLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.signUp({
       email,

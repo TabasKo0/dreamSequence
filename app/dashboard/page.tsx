@@ -176,7 +176,7 @@ export default async function Dashboard() {
         )}
 
         {/* Team Details & Members */}
-        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-72 mb-6">
+        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-72 md:min-h-78 mb-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-xl font-semibold tracking-wide">Team Details</h3>
             <Link 
