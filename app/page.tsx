@@ -25,9 +25,6 @@ export default function Home() {
           <Link href="/dashboard" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/10 border border-white/50 backdrop-blur-md shadow-xl text-white font-semibold tracking-wide hover:bg-white/20 transition-all text-center">
             Go to Dashboard
           </Link>
-          <Link href="/login" className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/5 border border-white/20 backdrop-blur-md shadow-xl text-white/70 hover:text-white font-semibold tracking-wide hover:bg-white/10 transition-all text-center">
-            Login / Sign Up
-          </Link>
         </div>
       </div>
 
