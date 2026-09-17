@@ -17,6 +17,7 @@ export default function Sidebar() {
     is_active: boolean;
     submissions_locked: boolean;
   } | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     async function getUserData() {
@@ -87,7 +88,30 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col w-64 border-r border-white/50 bg-black/20 backdrop-blur-3xl p-4 gap-6 h-full shrink-0 overflow-y-auto">
+    <>
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center gap-4 w-full p-4 bg-black/40 backdrop-blur-xl border-b border-white/20 z-50 shrink-0">
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white p-1">
+          {isMobileMenuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          )}
+        </button>
+        <h1 className="text-xl font-bold tracking-wider text-red-500 font-montserrat drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+          DREAM SEQUENCE
+        </h1>
+      </div>
+
+      {/* Sidebar (Desktop + Mobile Slide-out) */}
+      <aside className={`
+        fixed inset-y-0 left-0 z-40 transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0 md:flex flex-col w-64 border-r border-white/50 bg-[#0d1520]/95 md:bg-black/20 backdrop-blur-3xl p-4 pt-20 md:pt-4 gap-6 h-full shrink-0 overflow-y-auto shadow-2xl md:shadow-none
+      `}>
       {/* User Card */}
       <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/50 shadow-lg mt-2">
         <div className="w-10 h-10 shrink-0 rounded-full bg-slate-500 flex items-center justify-center text-lg font-medium text-white shadow-inner">
@@ -170,5 +194,14 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </>
   );
 }

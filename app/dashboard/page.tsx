@@ -30,22 +30,22 @@ export default async function Dashboard() {
   }
 
   return (
-      <main className="flex-1 min-h-0 flex flex-col h-full overflow-y-auto p-6 md:p-10 relative">
+      <main className="flex-1 min-h-0 flex flex-col h-full overflow-y-auto p-4 pb-28 md:p-10 md:pb-10 relative">
         {/* Top Header */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
           <div>
-            <h1 className="text-5xl font-bold mb-2 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]" >DASHBOARD</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]" >DASHBOARD</h1>
           </div>
         </header>
 
         {/* Status Banner */}
-        <div className="relative w-full rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-8 mb-6 flex items-center shadow-2xl overflow-hidden min-h-[140px]">
+        <div className="relative w-full rounded-[2rem] bg-gradient-to-r from-white-800/40 to-white-900/40 border border-white/50 backdrop-blur-xs p-6 md:p-8 mb-6 flex items-center shadow-2xl overflow-hidden min-h-[140px]">
           <div className="absolute inset-0 bg-white/5"></div>
           <div className="absolute top-0 left-1/4 w-1/3 h-full bg-white-500/10 blur-[6px] -z-10"></div>
           
-          <div className="flex-1 flex items-center gap-8 z-10">
-            <div className="w-48 h-48 relative flex items-center justify-center mix-blend-screen opacity-80">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+          <div className="flex-1 flex flex-col md:flex-row items-center gap-6 md:gap-8 z-10">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 relative flex items-center justify-center mix-blend-screen opacity-80">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" className="w-full h-full">
 <defs>
   <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
     <feGaussianBlur stdDeviation="1.4" result="b"/>
@@ -115,8 +115,8 @@ export default async function Dashboard() {
 
         {/* Pathways to Flags */}
         <div className="grid grid-cols-1 gap-6 mb-6">
-          <div className="rounded-[2rem] bg-gradient-to-r from-red-950/20 via-white/5 to-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 flex items-center gap-2">
+          <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 md:p-8 flex items-center gap-2">
               <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
                 {team ? team.game_level : "Reality"}
               </span>
@@ -157,7 +157,7 @@ export default async function Dashboard() {
         </div>
 
         {/* Team Details & Members */}
-        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-8 shadow-xl relative overflow-hidden min-h-[200px] mb-6">
+        <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-[200px] mb-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-xl font-semibold tracking-wide">Team Details</h3>
             <Link 

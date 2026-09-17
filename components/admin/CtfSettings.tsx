@@ -109,7 +109,7 @@ export default function CtfSettings({ initialSettings }: CtfSettingsProps) {
       <div className="space-y-6">
         
         {/* Toggle 1: Event Active */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-black/20 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 bg-black/20 rounded-xl border border-white/5">
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold text-white">Event Active</h3>
             <p className="text-sm text-gray-400 mt-1">
@@ -134,7 +134,7 @@ export default function CtfSettings({ initialSettings }: CtfSettingsProps) {
         </div>
 
         {/* Toggle 2: Submissions Locked */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-black/20 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 bg-black/20 rounded-xl border border-white/5">
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold text-white">Submissions Locked</h3>
             <p className="text-sm text-gray-400 mt-1">
@@ -159,7 +159,7 @@ export default function CtfSettings({ initialSettings }: CtfSettingsProps) {
         </div>
 
         {/* Toggle 3: Registration Phase */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-black/20 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 bg-black/20 rounded-xl border border-white/5">
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold text-white">Registration Phase</h3>
             <p className="text-sm text-gray-400 mt-1">
@@ -184,7 +184,7 @@ export default function CtfSettings({ initialSettings }: CtfSettingsProps) {
         </div>
 
         {/* Number Input: Max Team Size */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-black/20 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 bg-black/20 rounded-xl border border-white/5">
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold text-white">Max Team Size</h3>
             <p className="text-sm text-gray-400 mt-1">
@@ -211,7 +211,7 @@ export default function CtfSettings({ initialSettings }: CtfSettingsProps) {
         </div>
 
         {/* Toggle 4: Team Management */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-black/20 rounded-xl border border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 bg-black/20 rounded-xl border border-white/5">
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold text-white">Team Management</h3>
             <p className="text-sm text-gray-400 mt-1">

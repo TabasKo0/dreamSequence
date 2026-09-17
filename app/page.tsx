@@ -13,11 +13,11 @@ export default function Home() {
       <div className="z-10 flex flex-col items-center justify-center text-center max-w-3xl">
         
 
-        <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold mb-6 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]">
           DREAM SEQUENCE
         </h1>
         
-        <p className="text-lg text-white/70 mb-12 max-w-xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-white/70 mb-12 max-w-xl mx-auto leading-relaxed">
           Descend through layers of the subconscious. Build your team, solve challenges, and navigate the dream.
         </p>
 

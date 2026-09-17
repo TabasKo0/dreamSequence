@@ -27,7 +27,7 @@ export default async function AdminPage() {
     <>
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-5xl font-bold mb-2 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight montserrat-bold text-red-500 drop-shadow-[0_0_25px_rgba(0,0,0,2.7)]">
             ADMIN DASHBOARD
           </h1>
           <p className="mt-3 text-gray-400 text-lg font-medium tracking-wide">
