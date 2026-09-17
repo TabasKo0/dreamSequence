@@ -277,7 +277,7 @@ export default function TeamManager() {
       return;
     }
     if (!confirm("Are you SURE you want to disband the team? This cannot be undone.")) return;
-    await handleApiAction("/api/team/disband", {});
+    await handleApiAction("/api/team/disband", { teamId: team?.id });
   };
 
   const handleCopyToken = () => {
