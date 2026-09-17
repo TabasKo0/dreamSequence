@@ -114,47 +114,66 @@ export default async function Dashboard() {
         </div>
 
         {/* Pathways to Flags */}
-        <div className="grid grid-cols-1 gap-6 mb-6">
-          <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 md:p-8 flex items-center gap-2">
-              <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
-                {team ? team.game_level : "Reality"}
-              </span>
-            </div>
+        {team?.game_level?.toLowerCase() !== 'victory' && (
+          <div className="grid grid-cols-1 gap-6 mb-6">
+            <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 md:p-8 flex items-center gap-2">
+                <span className="text-xs font-mono tracking-widest text-red-400 uppercase bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full">
+                  {team ? team.game_level : "Reality"}
+                </span>
+              </div>
 
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-red-400">FLAG {team ? team.current_flag : 1}</span>
-              <span className="text-white/30">•</span>
-              <span className="text-xs text-white/50 tracking-wider">Your Next Checkpoint</span>
-            </div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-semibold uppercase tracking-wider text-red-400">FLAG {team ? team.current_flag : 1}</span>
+                <span className="text-white/30">•</span>
+                <span className="text-xs text-white/50 tracking-wider">Your Next Checkpoint</span>
+              </div>
 
-            <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
-              PATHWAY TO FLAG {team ? team.current_flag : 1}
-            </h3>
+              <h3 className="text-2xl font-bold tracking-tight mb-3 montserrat-bold text-white">
+                PATHWAY TO FLAG {team ? team.current_flag : 1}
+              </h3>
 
-            
+              
 
-            <div>
-              {team ? (
-                <Link 
-                  href={`/${(team.game_level || 'Reality').toLowerCase().replace(/ /g, '-')}`} 
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group tracking-widest"
-                >
-                  <span className="uppercase font-bold text-red-400 group-hover:text-red-300">
-                    {team.current_flag === 1 
-                      ? "START CTF" 
-                      : `CONTINUE CTF (${team.game_level})`}
-                  </span>
-                  <span className="group-hover:translate-x-1 transition-transform text-red-400">&rarr;</span>
-                </Link>
-              ) : (
-                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/20 text-white/50 font-medium text-sm">
-                  <span>Create a team to start</span>
-                </div>
-              )}
+              <div>
+                {team ? (
+                  !ctfSettings?.is_active || ctfSettings?.submissions_locked ? (
+                    <button 
+                      disabled 
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white/30 font-medium text-sm cursor-not-allowed opacity-60 tracking-widest"
+                      title={!ctfSettings?.is_active ? "Event is currently inactive." : "Submissions are locked."}
+                    >
+                      <span className="uppercase font-bold text-red-400/50">
+                        {team.current_flag === 1 
+                          ? "START CTF" 
+                          : `CONTINUE CTF (${team.game_level})`}
+                      </span>
+                      <svg className="w-4 h-4 text-red-400/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <Link 
+                      href={`/${(team.game_level || 'Reality').toLowerCase().replace(/ /g, '-')}`} 
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/40 text-white font-medium text-sm transition-all duration-200 shadow-lg hover:shadow-red-500/10 hover:border-white/70 group tracking-widest"
+                    >
+                      <span className="uppercase font-bold text-red-400 group-hover:text-red-300">
+                        {team.current_flag === 1 
+                          ? "START CTF" 
+                          : `CONTINUE CTF (${team.game_level})`}
+                      </span>
+                      <span className="group-hover:translate-x-1 transition-transform text-red-400">&rarr;</span>
+                    </Link>
+                  )
+                ) : (
+                  <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/20 text-white/50 font-medium text-sm">
+                    <span>Create a team to start</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Team Details & Members */}
         <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden min-h-72 mb-6">

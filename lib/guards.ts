@@ -10,7 +10,20 @@ export async function enforceLevelAccess(requiredGameLevel: string) {
     redirect("/login");
   }
 
-  // 2. Team Null Check
+  // 2. Global CTF Settings Check (NEW)
+  // Fetch the single configuration row to check global game state
+  const { data: status } = await supabase
+    .from("ctf_settings")
+    .select("submissions_locked, is_active")
+    .eq("id", 1)
+    .single();
+
+  // If the event is paused (!is_active) or locked, kick the player to the dashboard
+  if (!status?.is_active || status?.submissions_locked) {
+    redirect("/dashboard");
+  }
+
+  // 3. Team Null Check
   const { data: profile } = await supabase
     .from("users")
     .select("team_id")
@@ -21,7 +34,7 @@ export async function enforceLevelAccess(requiredGameLevel: string) {
     redirect("/dashboard");
   }
 
-  // 3. Fetch Team Progress
+  // 4. Fetch Team Progress
   const { data: team } = await supabase
     .from("teams")
     .select("*, current_flag, game_level")
@@ -32,7 +45,7 @@ export async function enforceLevelAccess(requiredGameLevel: string) {
     redirect("/dashboard");
   }
 
-  // 4. Strict Level Enforcement
+  // 5. Strict Level Enforcement
   if (
     !team.game_level ||
     team.game_level.toLowerCase() !== requiredGameLevel.toLowerCase()
@@ -58,7 +71,7 @@ export async function enforceAdminAccess() {
     .select("is_admin")
     .eq("id", user.id)
     .single();
-
+    
   if (!profile || profile.is_admin !== true) {
     redirect("/dashboard");
   }
