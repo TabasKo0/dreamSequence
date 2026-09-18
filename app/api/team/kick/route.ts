@@ -10,71 +10,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 0. Check CTF Settings
-    const { data: settings } = await supabase.from('ctf_settings').select('team_leave_enabled').eq('id', 1).single()
-    if (settings && settings.team_leave_enabled === false) {
-      return NextResponse.json({ error: 'Leaving or modifying team rosters is currently disabled.' }, { status: 403 })
-    }
-
     const { targetUserId } = await request.json()
     if (!targetUserId || typeof targetUserId !== 'string') {
       return NextResponse.json({ error: 'Target user ID is required.' }, { status: 400 })
     }
 
-    if (targetUserId === user.id) {
-      return NextResponse.json({ error: 'You cannot kick yourself.' }, { status: 400 })
-    }
+    const { error: rpcError } = await supabase.rpc('kick_team_member', { target_user_id: targetUserId })
 
-    // 1. Get caller's current team
-    const { data: callerProfile, error: profileError } = await supabase
-      .from('users')
-      .select('team_id')
-      .eq('id', user.id)
-      .single()
-
-    if (profileError || !callerProfile?.team_id) {
-      return NextResponse.json({ error: 'You are not currently in a team.' }, { status: 400 })
-    }
-
-    const teamId = callerProfile.team_id
-
-    // 2. Check if caller is the owner
-    const { data: team, error: teamError } = await supabase
-      .from('teams')
-      .select('owner_id')
-      .eq('id', teamId)
-      .single()
-
-    if (teamError || !team) {
-      return NextResponse.json({ error: 'Team not found.' }, { status: 404 })
-    }
-
-    if (team.owner_id !== user.id) {
-      return NextResponse.json({ error: 'Only the team owner can kick members.' }, { status: 403 })
-    }
-
-    // 3. Verify target is on the same team
-    const { data: targetProfile, error: targetError } = await supabase
-      .from('users')
-      .select('team_id')
-      .eq('id', targetUserId)
-      .single()
-
-    if (targetError || targetProfile?.team_id !== teamId) {
-      return NextResponse.json({ error: 'Target user is not on your team.' }, { status: 400 })
-    }
-
-
-
-    // 4. Kick the target
-    const { error: updateError } = await supabase
-      .from('users')
-      .update({ team_id: null })
-      .eq('id', targetUserId)
-
-    if (updateError) {
-      console.error('Database Error (kick member):', updateError)
-      return NextResponse.json({ error: updateError.message || 'Failed to kick the member. Please try again.' }, { status: 400 })
+    if (rpcError) {
+      return NextResponse.json({ error: rpcError.message || 'Failed to kick the member. Please try again.' }, { status: 400 })
     }
 
     return NextResponse.json({

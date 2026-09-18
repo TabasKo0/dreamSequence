@@ -12,10 +12,7 @@ export async function updateCtfSettingsAction(updates: Record<string, any>) {
     const supabase = await createClient();
 
     // 2. Update the setting
-    const { error } = await supabase
-      .from("ctf_settings")
-      .update(updates)
-      .eq("id", 1);
+    const { error } = await supabase.rpc('update_ctf_settings', { settings_payload: updates });
 
     if (error) {
       console.error(`Failed to update settings:`, error);
