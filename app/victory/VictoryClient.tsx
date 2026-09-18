@@ -27,9 +27,9 @@ export default function VictoryClient({ challenges, team }: { challenges: any[],
           CONGRATULATIONS
         </h1>
         <div className=" text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">You have escaped the Dream Sequence.</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">You have escaped the Dream Sequence.</h2><p>?</p>
           <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
-            You successfully navigated the layers of the mind, bypassed the architectures of deceit, and retrieved what was lost. The mission is complete.
+            You successfully navigated the layers of the mind, bypassed the architectures of deceit, and retrieved what was lost. The mission is complete...?
           </p>
           <div className="">
             <p className="text-sm md:text-base text-gray-400 italic">

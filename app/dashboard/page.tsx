@@ -114,7 +114,7 @@ export default async function Dashboard() {
         </div>
 
         {/* Pathways to Flags */}
-        {team?.game_level?.toLowerCase() !== 'victory' && (
+        {(
           <div className="grid grid-cols-1 gap-6 mb-6">
             <div className="rounded-[2rem] bg-white/5 border border-white/50 backdrop-blur-xs p-6 md:p-8 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 md:p-8 flex items-center gap-2">
