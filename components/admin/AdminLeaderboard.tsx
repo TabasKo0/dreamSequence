@@ -27,9 +27,6 @@ export default async function AdminLeaderboard() {
             <tr>
               <th className="px-6 py-4 font-semibold">Rank</th>
               <th className="px-6 py-4 font-semibold">Team Name</th>
-              <th className="px-6 py-4 font-semibold">Score</th>
-              <th className="px-6 py-4 font-semibold">Game Level</th>
-              <th className="px-6 py-4 font-semibold">Hints Unlocked</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5 text-gray-200">
@@ -37,15 +34,7 @@ export default async function AdminLeaderboard() {
               <tr key={team.name} className="hover:bg-white/5 transition-colors">
                 <td className="px-6 py-4 font-mono">#{index + 1}</td>
                 <td className="px-6 py-4 font-semibold text-white">{team.name}</td>
-                <td className="px-6 py-4 font-mono text-blue-300 font-bold">{team.score}</td>
-                <td className="px-6 py-4">
-                  <span className="px-2 py-1 bg-white/10 rounded-md text-xs font-medium tracking-wide">
-                    {team.game_level || "Not Started"}
-                  </span>
-                </td>
-                <td className="px-6 py-4 font-mono text-gray-400">
-                  {team.unlocked_hints?.length || 0}
-                </td>
+        
               </tr>
             ))}
             {(!teams || teams.length === 0) && (
